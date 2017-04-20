@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   base_structures.h                                  :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 18:10:40 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 15:41:49 by ykolomie         ###   ########.fr       */
+/*   Created: 2016/11/30 22:19:51 by ykolomie          #+#    #+#             */
+/*   Updated: 2016/12/06 17:29:07 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASE_STRUCTURES_H
-# define BASE_STRUCTURES_H
+#include "libft.h"
 
-typedef struct	s_window
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	void	*mlx;
-	void	*win;
-}				t_window;
+	size_t	i;
+	size_t	needle_len;
 
-typedef struct	s_point2
-{
-	int		x;
-	int		y;
-}				t_point2;
-
-typedef struct	s_point3
-{
-	int		x;
-	int		y;
-	int		z;
-}				t_point3;
-
-#endif
+	if ((needle_len = ft_strlen(needle)) == 0)
+		return ((char*)haystack);
+	i = 0;
+	while (*haystack && len - i >= needle_len)
+	{
+		if ((haystack[0] == needle[0]) &&
+				(ft_strncmp(haystack, needle, needle_len) == 0))
+			return ((char*)haystack);
+		haystack++;
+		i++;
+	}
+	return (0);
+}

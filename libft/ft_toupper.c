@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 18:13:49 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 17:57:43 by ykolomie         ###   ########.fr       */
+/*   Created: 2016/11/30 22:20:08 by ykolomie          #+#    #+#             */
+/*   Updated: 2016/11/30 22:51:44 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
 
-# include "base_structures.h"
-
-# define WIN_HEIGHT	900
-# define WIN_WIDTH	1600
-
-void	draw_line(int *data_map, t_point2 from, t_point2 to, int color);
-int		fdf(char *map_file);
-#endif
+int	ft_toupper(int c)
+{
+	if (c >= 97 && c <= 122)
+		return (c - 32);
+	return (c);
+}

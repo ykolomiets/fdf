@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 18:13:49 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 17:57:43 by ykolomie         ###   ########.fr       */
+/*   Created: 2016/11/30 22:19:35 by ykolomie          #+#    #+#             */
+/*   Updated: 2016/11/30 22:27:26 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
+#include <stdlib.h>
 
-# include "base_structures.h"
+char	*ft_strmap(char const *s, char (*f)(char))
+{
+	char	*res;
+	size_t	len;
 
-# define WIN_HEIGHT	900
-# define WIN_WIDTH	1600
-
-void	draw_line(int *data_map, t_point2 from, t_point2 to, int color);
-int		fdf(char *map_file);
-#endif
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	res = (char*)malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (NULL);
+	res[len] = '\0';
+	while (len--)
+		res[len] = (*f)(s[len]);
+	return (res);
+}

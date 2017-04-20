@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 18:13:49 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 17:57:43 by ykolomie         ###   ########.fr       */
+/*   Created: 2016/11/30 22:19:53 by ykolomie          #+#    #+#             */
+/*   Updated: 2016/11/30 22:52:04 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
 
-# include "base_structures.h"
+char	*ft_strrchr(const char *s, int c)
+{
+	int i;
 
-# define WIN_HEIGHT	900
-# define WIN_WIDTH	1600
-
-void	draw_line(int *data_map, t_point2 from, t_point2 to, int color);
-int		fdf(char *map_file);
-#endif
+	i = 0;
+	while (s[i])
+		i++;
+	while (s[i] != (char)c && i >= 0)
+		i--;
+	if (i == -1)
+		return (0);
+	return ((char*)s + i);
+}

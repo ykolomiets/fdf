@@ -1,23 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 18:13:49 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 17:57:43 by ykolomie         ###   ########.fr       */
+/*   Created: 2016/11/30 22:18:50 by ykolomie          #+#    #+#             */
+/*   Updated: 2016/11/30 22:47:56 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
+#include <unistd.h>
 
-# include "base_structures.h"
+static void	ft_put(int n, int fd)
+{
+	char	c;
 
-# define WIN_HEIGHT	900
-# define WIN_WIDTH	1600
+	if (!n)
+		return ;
+	ft_put(n / 10, fd);
+	c = n % 10 + '0';
+	write(fd, &c, 1);
+}
 
-void	draw_line(int *data_map, t_point2 from, t_point2 to, int color);
-int		fdf(char *map_file);
-#endif
+void		ft_putnbr_fd(int n, int fd)
+{
+	if (fd < 1)
+		return ;
+	if (n == 0)
+		write(fd, "0", 1);
+	else if (n == -2147483648)
+		write(fd, "-2147483648", 11);
+	else
+	{
+		if (n < 0)
+		{
+			write(fd, "-", 1);
+			n = -n;
+		}
+		ft_put(n, fd);
+	}
+}

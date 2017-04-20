@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   base_structures.h                                  :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 18:10:40 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 15:41:49 by ykolomie         ###   ########.fr       */
+/*   Created: 2016/11/30 22:17:16 by ykolomie          #+#    #+#             */
+/*   Updated: 2016/12/01 19:51:14 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASE_STRUCTURES_H
-# define BASE_STRUCTURES_H
+#include "libft.h"
 
-typedef struct	s_window
+int	ft_atoi(const char *nptr)
 {
-	void	*mlx;
-	void	*win;
-}				t_window;
+	int res;
+	int sign;
 
-typedef struct	s_point2
-{
-	int		x;
-	int		y;
-}				t_point2;
-
-typedef struct	s_point3
-{
-	int		x;
-	int		y;
-	int		z;
-}				t_point3;
-
-#endif
+	while (!(*nptr != ' ' && *nptr != '\t' && *nptr != '\n'
+				&& *nptr != '\v' && *nptr != '\f' && *nptr != '\r'))
+		nptr++;
+	sign = 1;
+	res = 0;
+	if (*nptr == '-')
+	{
+		sign = -1;
+		nptr++;
+	}
+	else if (*nptr == '+')
+		nptr++;
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		res = res * 10 + *nptr - '0';
+		nptr++;
+	}
+	return (sign * res);
+}

@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 18:13:49 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 17:57:43 by ykolomie         ###   ########.fr       */
+/*   Created: 2016/11/30 22:20:02 by ykolomie          #+#    #+#             */
+/*   Updated: 2016/12/01 19:50:27 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
+#include <stdlib.h>
 
-# include "base_structures.h"
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
+{
+	char			*res;
+	unsigned int	i;
 
-# define WIN_HEIGHT	900
-# define WIN_WIDTH	1600
-
-void	draw_line(int *data_map, t_point2 from, t_point2 to, int color);
-int		fdf(char *map_file);
-#endif
+	if (!s)
+		return (NULL);
+	if (!(res = (char*)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	res[len] = '\0';
+	i = 0;
+	while (i < len)
+	{
+		res[i] = s[i + start];
+		i++;
+	}
+	return (res);
+}

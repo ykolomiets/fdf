@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 18:12:49 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/03/28 18:13:44 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/04/20 18:35:43 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "fdf.h"
 #include <stdlib.h>
 
-void	step_by_x(t_window *window, t_point from, t_point to, int color)
+void	step_by_x(int	*data_map, t_point2 from, t_point2 to, int color)
 {
 	int	a;
 	int	b;
@@ -34,12 +34,12 @@ void	step_by_x(t_window *window, t_point from, t_point to, int color)
 			from.y += inc;
 			p += b;
 		}
-		mlx_pixel_put(window->mlx, window->win, from.x, from.y, color);
+		data_map[from.x + from.y * WIN_WIDTH] = color;
 		from.x++;
 	}
 }
 
-void	step_by_y(t_window *window, t_point from, t_point to, int color)
+void	step_by_y(int	*data_map, t_point2 from, t_point2 to, int color)
 {
 	int	a;
 	int	b;
@@ -59,25 +59,25 @@ void	step_by_y(t_window *window, t_point from, t_point to, int color)
 			from.x += inc;
 			p +=b;
 		}
-		mlx_pixel_put(window->mlx, window->win, from.x, from.y, color);
+		data_map[from.x + from.y * WIN_WIDTH] = color;
 		from.y++;
 	}
 }
 
-void	draw_line(t_window *window, t_point from, t_point to, int color)
+void	draw_line(int	*data_map, t_point2 from, t_point2 to, int color)
 {
 	if (abs(to.y - from.y) < abs(to.x - from.x))
 	{
 		if (from.x > to.x)
-			step_by_x(window, to, from, color);
+			step_by_x(data_map, to, from, color);
 		else
-			step_by_x(window, from, to, color);
+			step_by_x(data_map, from, to, color);
 	}
 	else
 	{
 		if (from.y > to.y)
-			step_by_y(window, to, from, color);
+			step_by_y(data_map, to, from, color);
 		else
-			step_by_y(window, from, to, color);
+			step_by_y(data_map, from, to, color);
 	}
 }
