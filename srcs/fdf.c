@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 15:19:34 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 18:36:32 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/04/20 19:18:30 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,10 @@ void		map_to_win(int	*data_map, t_window *wind)
 
 	image = mlx_new_image(wind->mlx, WIN_WIDTH, WIN_HEIGHT);
 	image_addr = mlx_get_data_addr(image, &bits_per_pixel, &size_line, &endian);
-	ft_putstr(image_addr);
-	printf("bits_per_pixel: %d, size_line: %d, endian: %d\n", bits_per_pixel, size_line, endian);
 	for (int i = 0; i < WIN_HEIGHT; i++)
 		for (int j = 0; j < WIN_WIDTH; j++)
-		{
-			((int*)image_addr)[i * WIN_HEIGHT + j] = data_map[i * WIN_HEIGHT + j];
-			printf("%d \t %d\n", i, j);
-		}
-	mlx_put_image_to_window(wind->mlx, wind->win, image, WIN_WIDTH, WIN_HEIGHT);
-	printf("map to win end");
+			((int*)image_addr)[i * WIN_WIDTH + j] = data_map[i * WIN_WIDTH + j];
+	mlx_put_image_to_window(wind->mlx, wind->win, image, 0, 0);
 }
 
 void		draw_map(t_point3 **map, int rows, int columns, t_window *wind)
@@ -142,7 +136,7 @@ void		draw_map(t_point3 **map, int rows, int columns, t_window *wind)
 	int 		j;
 	int			*data_map;
 
-	data_map = (int *)ft_memalloc(WIN_WIDTH * WIN_HEIGHT);
+	data_map = (int *)ft_memalloc(WIN_WIDTH * WIN_HEIGHT * sizeof(int));
 	i = 0;
 	while (i < rows)
 	{
