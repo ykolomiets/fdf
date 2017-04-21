@@ -3,9 +3,9 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/12/14 16:54:48 by gtertysh          #+#    #+#              #
+#    Created: 2016/12/14 16:54:48 by ykolomie          #+#    #+#              #
 #    Updated: 2017/04/20 15:27:53 by ykolomie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -26,7 +26,7 @@ SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
 
 OBJ = $(addprefix $(OBJDIR), $(OBJ_FILES))
 
-INC = -I ./includes -I $(LIBFTFOLDER)
+INC = -I ./includes -I $(LIBFTFOLDER) -I $(LMLXFOLDER)
 
 LIB = libft.a
 
@@ -34,9 +34,12 @@ LIBFLAGS = -lft -L $(LIBFTFOLDER) -lmlx -L $(LMLXFOLDER)
 
 LIBFTFOLDER = ./libft/
 
-LMLXFOLDER = ./minilibx_macos
 
-FRAMEWORKS = -framework OpenGL -framework AppKit
+#LMLXFOLDER = ./minilibx_macos
+LMLXFOLDER = ./minilibx
+
+FRAMEWORKS = -lXext -lX11
+#FRAMEWORKS = -framework OpenGL -framework AppKit
 
 FLAGS = -Werror -Wextra -Wall
 

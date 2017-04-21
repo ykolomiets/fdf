@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = libft.a
-SRC =	ft_memset.c		\
+SRC_FILES =	ft_memset.c		\
 		ft_bzero.c		\
 		ft_memcpy.c		\
 		ft_memmove.c	\
@@ -77,9 +77,16 @@ SRC =	ft_memset.c		\
 		get_next_line.c	\
 		read.c	
 
-OBJ = $(SRC:.c=.o)
-INC = -I libft.h
-CC = gcc
+OBJDIR = ./obj/
+
+OBJ_FILES = $(SRC_FILES:.c=.o)
+
+SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
+
+OBJ = $(addprefix $(OBJDIR), $(OBJ_FILES))
+
+CC = clang
+
 FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
@@ -87,8 +94,8 @@ all: $(NAME)
 $(NAME): $(OBJ)
 		   ar rcs $(NAME) $(OBJ)
 
-%.o: %.c libft.h
-	$(CC) $(FLAGS) $(INC) -c $< -o $@
+$(OBJDIR)%.o : $(SRCDIR)%.c
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
