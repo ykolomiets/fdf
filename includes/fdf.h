@@ -15,9 +15,9 @@
 
 # include "base_structures.h"
 
-# define WIN_HEIGHT	900
-# define WIN_WIDTH	1600
+# define WIN_HEIGHT	720
+# define WIN_WIDTH	1280
 
-void	draw_line(int *data_map, t_point2 from, t_point2 to, int color);
+void	draw_line(int *data_map, t_vector2 from, t_vector2 to, int color);
 int		fdf(char *map_file);
 #endif

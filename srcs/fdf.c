@@ -24,7 +24,7 @@ int		keyhook_func(int keycode, void *param)
 	t_window	*wind;
 
 	wind = (t_window *)param;
-	printf("keycode: %d", keycode);
+	printf("keycode: %d\n", keycode);
 	if (keycode == 53)
 		exit(0);
 	return (0);
@@ -38,11 +38,11 @@ void		free_arr_str(char ***table, int size)
 	*table = 0;
 }
 
-t_point3	**malloc_map(int fd, char ***splited, int *rows, int *columns)
+t_vector4	**malloc_map(int fd, char ***splited, int *rows, int *columns)
 {
 	char		*file;
 	char		**tempstr;
-	t_point3	**res;
+	t_vector4	**res;
 	int			i;
 	
 	file = read_file(fd);
@@ -56,18 +56,14 @@ t_point3	**malloc_map(int fd, char ***splited, int *rows, int *columns)
 	while (tempstr[(*columns)])
 		(*columns)++;
 	free_arr_str(&tempstr, *columns);
-	res = (t_point3 **)malloc(sizeof(t_point3 *) * (*rows));
+	res = (t_vector4 **)malloc(sizeof(t_vector4 *) * (*rows));
 	i = 0;
 	while (i < *rows)
-		res[i++] = (t_point3 *)malloc(sizeof(t_point3) * (*columns));
-	ft_putstr("size: ");
-	ft_putnbr(*rows);
-	ft_putchar('x');
-	ft_putnbr(*columns);
+		res[i++] = (t_vector4 *)malloc(sizeof(t_vector4) * (*columns));
 	return (res);
 }
 
-int			fill_map(t_point3 **map, char **splited, int rows, int columns)
+int			fill_map(t_vector4 **map, char **splited, int rows, int columns)
 {
 	int		i;
 	int		j;
@@ -80,8 +76,8 @@ int			fill_map(t_point3 **map, char **splited, int rows, int columns)
 		temp = ft_strsplit(splited[i], ' ');
 		while (j < columns)
 		{
-			map[i][j].x = j * WIN_WIDTH / columns + WIN_WIDTH / columns / 2;
-			map[i][j].y = i * WIN_HEIGHT / rows + WIN_HEIGHT / rows / 2;
+			map[i][j].x = j;
+			map[i][j].y = i;
 			map[i][j].z = ft_atoi(temp[j]);
 			j++;
 		};
@@ -91,18 +87,18 @@ int			fill_map(t_point3 **map, char **splited, int rows, int columns)
 	return (0);
 }
 
-t_point2	p3_to_p2(t_point3 p3)
+t_vector2	p3_to_p2(t_vector4 p3)
 {
-	t_point2 res;
+	t_vector2 res;
 
 	res.x = p3.x;
 	res.y = p3.y;
 	return (res);
 }
 
-t_point3	**read_map(char *map_file, int *rows, int* columns)
+t_vector4	**read_map(char *map_file, int *rows, int* columns)
 {
-	t_point3	**res;
+	t_vector4	**res;
 	char		**splited;
 	int			fd;
 
@@ -130,7 +126,7 @@ void		map_to_win(int	*data_map, t_window *wind)
 	mlx_put_image_to_window(wind->mlx, wind->win, image, 0, 0);
 }
 
-void		draw_map(t_point3 **map, int rows, int columns, t_window *wind)
+void		draw_map(t_vector4 **map, int rows, int columns, t_window *wind)
 {
 	int 		i;
 	int 		j;
@@ -157,7 +153,7 @@ void		draw_map(t_point3 **map, int rows, int columns, t_window *wind)
 int		fdf(char *map_file)
 {
 	t_window	wind;
-	t_point3	**map;
+	t_vector4	**map;
 	int			rows;
 	int			columns;
 

@@ -13,17 +13,19 @@
 #include "mlx.h"
 #include "fdf.h"
 #include <stdlib.h>
+#include <math.h>
 
-void	step_by_x(int	*data_map, t_point2 from, t_point2 to, int color)
+void	step_by_x(int	*data_map, t_vector2 from, t_vector2 to, int color)
 {
-	int	a;
-	int	b;
-	int	p;
-	int	inc;
+	int		a;
+	int		b;
+	int		p;
+	int		inc;
+	double	temp;
 
-	a = 2 * abs(to.y - from.y);
-	b = a - 2 * abs(to.x - from.x);
-	p = a - abs(to.x - from.x);
+	a = 2 * abs((int)(to.y - from.y));
+	b = a - 2 * abs((int)(to.x - from.x));
+	p = a - abs((int)(to.x - from.x));
 	inc = to.y - from.y > 0 ? 1 : -1;
 	while (from.x <= to.x)
 	{
@@ -34,21 +36,24 @@ void	step_by_x(int	*data_map, t_point2 from, t_point2 to, int color)
 			from.y += inc;
 			p += b;
 		}
-		data_map[from.x + from.y * WIN_WIDTH] = color;
-		from.x++;
+		temp = from.x + from.y * WIN_WIDTH;
+		if (temp >= 0 && temp <= WIN_WIDTH * WIN_HEIGHT)	
+			data_map[(int)temp] = color;
+		from.x += 1;
 	}
 }
 
-void	step_by_y(int	*data_map, t_point2 from, t_point2 to, int color)
+void	step_by_y(int	*data_map, t_vector2 from, t_vector2 to, int color)
 {
-	int	a;
-	int	b;
-	int	p;
-	int	inc;
+	int		a;
+	int		b;
+	int		p;
+	int		inc;
+	double	temp;
 	
-	a = 2 * abs(to.x - from.x);
-	b = a - 2 * abs(to.y - from.y);
-	p = a - abs(to.y - from.y);
+	a = 2 * abs((int)(to.x - from.x));
+	b = a - 2 * abs((int)(to.y - from.y));
+	p = a - abs((int)(to.y - from.y));
 	inc = to.x - from.x > 0 ? 1 : -1;
 	while (from.y <= to.y)
 	{
@@ -59,14 +64,16 @@ void	step_by_y(int	*data_map, t_point2 from, t_point2 to, int color)
 			from.x += inc;
 			p +=b;
 		}
-		data_map[from.x + from.y * WIN_WIDTH] = color;
-		from.y++;
+		temp = from.x + from.y * WIN_WIDTH;
+		if (temp >= 0 && temp <= WIN_WIDTH * WIN_HEIGHT)	
+			data_map[(int)temp] = color;
+		from.y += 1;
 	}
 }
 
-void	draw_line(int	*data_map, t_point2 from, t_point2 to, int color)
+void	draw_line(int	*data_map, t_vector2 from, t_vector2 to, int color)
 {
-	if (abs(to.y - from.y) < abs(to.x - from.x))
+	if (fabs(to.y - from.y) < fabs(to.x - from.x))
 	{
 		if (from.x > to.x)
 			step_by_x(data_map, to, from, color);
