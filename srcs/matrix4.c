@@ -1,4 +1,5 @@
 #include "base_structures.h"
+#include <math.h>
 
 void	m4_add(t_matrix4 a, t_matrix4 b, t_matrix4 c)
 {
@@ -45,6 +46,19 @@ double m3_det(t_matrix3 mat)
 			+ mat[2] * (mat[3] * mat[7] - mat[6] * mat[4]));
 }
 
+void	m3_identity(t_matrix3 m)
+{
+	m[0] = 1;
+	m[4] = 1;
+	m[8] = 1;
+	m[1] = 0;
+	m[2] = 0;
+	m[3] = 0;
+	m[5] = 0;
+	m[6] = 0;
+	m[7] = 0;
+}
+
 int		m3_inverse(t_matrix3 dest, t_matrix3 src)
 {
 	double	det;
@@ -55,6 +69,16 @@ int		m3_inverse(t_matrix3 dest, t_matrix3 src)
 		m3_identity(dest);
 		return (0);
 	}
+	dest[0] =    src[4]*src[8] - src[5]*src[7]   / det;
+    dest[1] = -( src[1]*src[8] - src[7]*src[2] ) / det;
+    dest[2] =    src[1]*src[5] - src[4]*src[2]   / det;
+    dest[3] = -( src[3]*src[8] - src[5]*src[6] ) / det;
+    dest[4] =    src[0]*src[8] - src[6]*src[2]   / det;
+    dest[5] = -( src[0]*src[5] - src[3]*src[2] ) / det;
+    dest[6] =    src[3]*src[7] - src[6]*src[4]   / det;
+    dest[7] = -( src[0]*src[7] - src[6]*src[1] ) / det;
+    dest[8] =    src[0]*src[4] - src[1]*src[3]   / det;
+    return(1);
 }
 
 void	m4_submat(t_matrix4 m, t_matrix3 msub, int i, int j)
@@ -88,15 +112,28 @@ double	m4_det(t_matrix4 m)
 	int			n;
 
 	n = 0;
-	result = 0;
+	res = 0;
 	i = 0;
 	while (n < 4)
 	{
 		m4_submat(m, m3sub, 0, n);
 		det = m3_det(m3sub);
-		result += m[n] * det * i;
+		res += m[n] * det * i;
 		n++;
 		i *= -1;
 	}
 	return (res);
+}
+
+void	scale_m4(t_matrix4 mat, double x, double y, double z)
+{
+	int i;
+
+	i = 0;
+	while (i < 16)
+		mat[i++] = 0;
+	mat[0] = x;
+	mat[5] = y;
+	mat[10] = z;
+	mat[15] = 1;
 }

@@ -23,26 +23,32 @@ typedef struct	s_window
 	void	*win;
 }				t_window;
 
-typedef union	u_vector2
+typedef struct	s_vector2
 {
-	double	coords[2];
-	struct{
 		double	x;
 		double	y;
-	};
 }				t_vector2;
 
-typedef union	u_vector4
+typedef struct	s_vector4
 {
-	double	coords[4];
-	struct{
 		double	x;
 		double	y;
 		double	z;
 		double	w;
-	};
 }				t_vector4;
 
+typedef struct	s_fdf
+{
+	t_window	wind;
+	t_vector4	**map;
+	int			map_rows;
+	int			map_columns;
+}				t_fdf;
+
+void		v4_add(t_vector4 a, t_vector4 b, t_vector4 c);
+void		v4_sub(t_vector4 a, t_vector4 b, t_vector4 c);
+double		v4_dot_product(t_vector4 a, t_vector4 b);
+void		v4_cross_product(t_vector4 a, t_vector4 b, t_vector4 c);
 
 typedef double	t_matrix3[9];
 typedef	double	t_matrix4[16];
@@ -51,5 +57,11 @@ void		m4_add(t_matrix4 a, t_matrix4 b, t_matrix4 c);
 void		m4_sub(t_matrix4 a, t_matrix4 b, t_matrix4 c);
 void		m4_mul(t_matrix4 a, t_matrix4 b, t_matrix4 c);
 double		m4_det(t_matrix4);
+
+
+void		translate_m4(t_matrix4 res, double x, double y, double z);
+void		scale_m4(t_matrix4 res, double x, double y, double z);
+
+void		v4_x_m4(t_vector4 *v, t_matrix4 m);
 
 #endif

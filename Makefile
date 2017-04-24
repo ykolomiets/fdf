@@ -18,7 +18,10 @@ OBJDIR = ./obj/
 
 SRC_FILES = 	main.c						\
 				draw_line.c					\
-				fdf.c
+				fdf.c						\
+				matrix4.c 					\
+				vector4.c					\
+				v_and_m.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

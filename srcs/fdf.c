@@ -19,14 +19,51 @@
 #include <unistd.h>
 #include <stdio.h>
 
+
+void		draw_map(t_vector4 **map, int rows, int columns, t_window *wind);
+
+void	map_change(t_vector4** map, int rows, int columns, t_matrix4 mat)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	while (i < rows)
+	{
+		j = 0;
+		while (j < columns)
+		{
+			v4_x_m4(&map[i][j], mat);
+			j++;
+		}
+		i++;
+	}		
+}
+
 int		keyhook_func(int keycode, void *param)
 {
-	t_window	*wind;
+	t_fdf	*p;
 
-	wind = (t_window *)param;
+	p = (t_fdf *)param;
 	printf("keycode: %d\n", keycode);
 	if (keycode == 53)
 		exit(0);
+	else if (keycode == 49)
+	{
+		t_matrix4 scale_matrix;
+		
+		scale_m4(scale_matrix, 2, 2, 2);
+		map_change(p->map, p->map_rows, p->map_columns, scale_matrix);
+		draw_map(p->map, p->map_rows, p->map_columns, &p->wind);
+	}
+	else if (keycode == 50)
+	{
+		t_matrix4 scale_matrix;
+		
+		scale_m4(scale_matrix, 0.5, 0.5, 0.5);
+		map_change(p->map, p->map_rows, p->map_columns, scale_matrix);
+		draw_map(p->map, p->map_rows, p->map_columns, &p->wind);
+	}
 	return (0);
 }
 
@@ -152,16 +189,13 @@ void		draw_map(t_vector4 **map, int rows, int columns, t_window *wind)
 
 int		fdf(char *map_file)
 {
-	t_window	wind;
-	t_vector4	**map;
-	int			rows;
-	int			columns;
-
-	map = read_map(map_file, &rows, &columns);
-	wind.mlx = mlx_init();
-	wind.win = mlx_new_window(wind.mlx, WIN_WIDTH, WIN_HEIGHT, "mlx 42");
-	draw_map(map, rows, columns, &wind);
-	mlx_key_hook(wind.win, keyhook_func, &wind);
-	mlx_loop(wind.mlx);
+	t_fdf		param;
+	
+	param.map = read_map(map_file, &param.map_rows, &param.map_columns);
+	param.wind.mlx = mlx_init();
+	param.wind.win = mlx_new_window(param.wind.mlx, WIN_WIDTH, WIN_HEIGHT, "mlx 42");
+	draw_map(param.map, param.map_rows, param.map_columns, &param.wind);
+	mlx_key_hook(param.wind.win, keyhook_func, &param);
+	mlx_loop(param.wind.mlx);
 	return (0);
 }
