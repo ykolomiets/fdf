@@ -22,6 +22,11 @@
 
 void		draw_map(t_vector4 **map, int rows, int columns, t_window *wind);
 
+void	print_coord(t_vector4 vect)
+{
+	printf("<%f, %f, %f>", vect.x, vect.y, vect.z);
+}
+
 void	map_change(t_vector4** map, int rows, int columns, t_matrix4 mat)
 {
 	int i;
@@ -37,33 +42,83 @@ void	map_change(t_vector4** map, int rows, int columns, t_matrix4 mat)
 			j++;
 		}
 		i++;
-	}		
+	}	
 }
 
 int		keyhook_func(int keycode, void *param)
 {
-	t_fdf	*p;
+	t_fdf		*p;
+	t_matrix4	transform_m4;
 
 	p = (t_fdf *)param;
+	m4_identity(transform_m4);
 	printf("keycode: %d\n", keycode);
 	if (keycode == 53)
 		exit(0);
 	else if (keycode == 49)
 	{
-		t_matrix4 scale_matrix;
-		
-		scale_m4(scale_matrix, 2, 2, 2);
-		map_change(p->map, p->map_rows, p->map_columns, scale_matrix);
-		draw_map(p->map, p->map_rows, p->map_columns, &p->wind);
-	}
+		m4_translate(transform_m4, -p->center.x, -p->center.y, -p->center.z);
+		m4_scale(transform_m4, 2, 2, 2);
+		m4_translate(transform_m4, p->center.x, p->center.y, p->center.z);
+
+	} 
 	else if (keycode == 50)
 	{
-		t_matrix4 scale_matrix;
-		
-		scale_m4(scale_matrix, 0.5, 0.5, 0.5);
-		map_change(p->map, p->map_rows, p->map_columns, scale_matrix);
-		draw_map(p->map, p->map_rows, p->map_columns, &p->wind);
+		m4_translate(transform_m4, -p->center.x, -p->center.y, -p->center.z);
+		m4_scale(transform_m4, 0.5, 0.5, 0.5);
+		m4_translate(transform_m4, p->center.x, p->center.y, p->center.z);
 	}
+	else if (keycode == 65361)
+	{
+		m4_translate(transform_m4, -5, 0, 0);
+		p->center.x -= 5;
+	}
+	else if (keycode == 65362)
+	{
+		m4_translate(transform_m4, 0, -5, 0);
+		p->center.y -= 5;
+	}
+	else if (keycode == 65363)
+	{
+		m4_translate(transform_m4, 5, 0, 0);
+		p->center.x += 5;
+	}
+	else if (keycode == 65364)
+	{
+		m4_translate(transform_m4, 0, 5, 0);
+		p->center.y += 5;
+	}
+	else if (keycode == 97)
+	{
+		m4_translate(transform_m4, -p->center.x, -p->center.y, -p->center.z);
+		m4_rotate_yaxis(transform_m4, -0.05);
+		m4_translate(transform_m4, p->center.x, p->center.y, p->center.z);
+	}
+	else if (keycode == 100)
+	{	m4_translate(transform_m4, -p->center.x, -p->center.y, -p->center.z);
+		m4_rotate_yaxis(transform_m4, 0.05);
+		m4_translate(transform_m4, p->center.x, p->center.y, p->center.z);
+	}else if (keycode == 119)
+	{	m4_translate(transform_m4, -p->center.x, -p->center.y, -p->center.z);
+		m4_rotate_xaxis(transform_m4, 0.05);
+		m4_translate(transform_m4, p->center.x, p->center.y, p->center.z);
+	}else if (keycode == 115)
+	{	m4_translate(transform_m4, -p->center.x, -p->center.y, -p->center.z);
+		m4_rotate_xaxis(transform_m4, -0.05);
+		m4_translate(transform_m4, p->center.x, p->center.y, p->center.z);
+	}else if (keycode == 101)
+	{	m4_translate(transform_m4, -p->center.x, -p->center.y, -p->center.z);
+		m4_rotate_zaxis(transform_m4, -0.05);
+		m4_translate(transform_m4, p->center.x, p->center.y, p->center.z);
+	}else if (keycode == 113)
+	{	m4_translate(transform_m4, -p->center.x, -p->center.y, -p->center.z);
+		m4_rotate_zaxis(transform_m4, 0.05);
+		m4_translate(transform_m4, p->center.x, p->center.y, p->center.z);
+	}else
+		return (1);
+	map_change(p->map, p->map_rows, p->map_columns, transform_m4);
+	draw_map(p->map, p->map_rows, p->map_columns, &p->wind);
+
 	return (0);
 }
 
@@ -115,7 +170,8 @@ int			fill_map(t_vector4 **map, char **splited, int rows, int columns)
 		{
 			map[i][j].x = j;
 			map[i][j].y = i;
-			map[i][j].z = ft_atoi(temp[j]);
+			map[i][j].z = -ft_atoi(temp[j]);
+			map[i][j].w = 1;
 			j++;
 		};
 		free_arr_str(&temp, columns);
@@ -140,7 +196,7 @@ t_vector4	**read_map(char *map_file, int *rows, int* columns)
 	int			fd;
 
 	fd = open(map_file, O_RDONLY);
-	res = malloc_map(fd, &splited, rows, columns);
+	res = malloc_map(fd, &splited, rows, columns);	
 	fill_map(res, splited, *rows, *columns);
 	free_arr_str(&splited, *rows);
 	close(fd);
@@ -176,9 +232,9 @@ void		draw_map(t_vector4 **map, int rows, int columns, t_window *wind)
 		j = 0;
 		while (j < columns)
 		{
-			if (i + 1 != columns)
+			if (i + 1 != rows)
 				draw_line(data_map, p3_to_p2(map[i][j]), p3_to_p2(map[i + 1][j]), 0xffffff);
-			if (j + 1 != rows)
+			if (j + 1 != columns)
 				draw_line(data_map, p3_to_p2(map[i][j]), p3_to_p2(map[i][j + 1]), 0xffffff);
 			j++;
 		}
@@ -192,6 +248,10 @@ int		fdf(char *map_file)
 	t_fdf		param;
 	
 	param.map = read_map(map_file, &param.map_rows, &param.map_columns);
+	param.center.y = param.map_rows / 2.0;
+	param.center.x = param.map_columns / 2.0;
+	param.center.z = 0;
+	param.center.w = 1;
 	param.wind.mlx = mlx_init();
 	param.wind.win = mlx_new_window(param.wind.mlx, WIN_WIDTH, WIN_HEIGHT, "mlx 42");
 	draw_map(param.map, param.map_rows, param.map_columns, &param.wind);

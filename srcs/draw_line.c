@@ -14,6 +14,7 @@
 #include "fdf.h"
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 void	step_by_x(int	*data_map, t_vector2 from, t_vector2 to, int color)
 {
@@ -21,7 +22,6 @@ void	step_by_x(int	*data_map, t_vector2 from, t_vector2 to, int color)
 	int		b;
 	int		p;
 	int		inc;
-	double	temp;
 
 	a = 2 * abs((int)(to.y - from.y));
 	b = a - 2 * abs((int)(to.x - from.x));
@@ -36,9 +36,10 @@ void	step_by_x(int	*data_map, t_vector2 from, t_vector2 to, int color)
 			from.y += inc;
 			p += b;
 		}
-		temp = from.x + from.y * WIN_WIDTH;
-		if (temp >= 0 && temp <= WIN_WIDTH * WIN_HEIGHT)	
-			data_map[(int)temp] = color;
+	
+		if ((from.x >= 0 && from.x < WIN_WIDTH) && 
+			(from.y >= 0 && from.y < WIN_HEIGHT))	
+			data_map[(int)(from.x + (int)from.y * WIN_WIDTH)] = color;
 		from.x += 1;
 	}
 }
@@ -49,7 +50,6 @@ void	step_by_y(int	*data_map, t_vector2 from, t_vector2 to, int color)
 	int		b;
 	int		p;
 	int		inc;
-	double	temp;
 	
 	a = 2 * abs((int)(to.x - from.x));
 	b = a - 2 * abs((int)(to.y - from.y));
@@ -64,9 +64,9 @@ void	step_by_y(int	*data_map, t_vector2 from, t_vector2 to, int color)
 			from.x += inc;
 			p +=b;
 		}
-		temp = from.x + from.y * WIN_WIDTH;
-		if (temp >= 0 && temp <= WIN_WIDTH * WIN_HEIGHT)	
-			data_map[(int)temp] = color;
+		if ((from.x >= 0 && from.x < WIN_WIDTH) && 
+			(from.y >= 0 && from.y < WIN_HEIGHT))
+			data_map[(int)(from.x + (int)from.y * WIN_WIDTH)] = color;
 		from.y += 1;
 	}
 }

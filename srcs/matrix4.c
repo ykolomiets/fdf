@@ -125,15 +125,102 @@ double	m4_det(t_matrix4 m)
 	return (res);
 }
 
-void	scale_m4(t_matrix4 mat, double x, double y, double z)
+void	m4_identity(t_matrix4 m)
 {
-	int i;
+	m[0] = m[5] = m[10] = m[15] = 1;
+	m[1] = m[2] = m[3] = m[4] =
+		m[6] = m[7] = m[8] = m[9] =
+		m[11] = m[12] = m[13] = m[14] = 0;
+}
 
+void	m4_scale(t_matrix4 mat, double x, double y, double z)
+{
+	mat[0] *= x;
+	mat[4] *= x;
+	mat[8] *= x;
+	mat[12] *= x;	
+	mat[1] *= y;
+	mat[5] *= y;
+	mat[9] *= y;
+	mat[13] *= y;
+	mat[2] *= z;
+	mat[6] *= z;
+	mat[10] *= z;
+	mat[14] *= z;
+}
+
+void	m4_translate(t_matrix4 mat, double x, double y, double z)
+{
+	mat[0] += mat[3] * x;
+	mat[1] += mat[3] * y;
+	mat[2] += mat[3] * z;
+	mat[4] += mat[7] * x;
+	mat[5] += mat[7] * y;
+	mat[6] += mat[7] * z;
+	mat[8] += mat[11] * x;
+	mat[9] += mat[11] * y;
+	mat[10] += mat[11] * z;
+	mat[12] += mat[15] * x;
+	mat[13] += mat[15] * y;
+	mat[14] += mat[15] * z;
+}
+
+void	m4_rotate_xaxis(t_matrix4 mat, double angle)
+{
+	t_matrix4	 rotation_matrix;
+	t_matrix4	temp;
+	int			i;
+
+	m4_identity(rotation_matrix);
+	rotation_matrix[5] = cos(angle);
+	rotation_matrix[6] = -sin(angle);
+	rotation_matrix[9] = sin(angle);
+	rotation_matrix[10] = cos(angle);
 	i = 0;
 	while (i < 16)
-		mat[i++] = 0;
-	mat[0] = x;
-	mat[5] = y;
-	mat[10] = z;
-	mat[15] = 1;
+	{
+		temp[i] = mat[i];
+		i++;
+	}
+	m4_mul(temp, rotation_matrix, mat);
+}
+
+void	m4_rotate_yaxis(t_matrix4 mat, double angle)
+{
+	t_matrix4	 rotation_matrix;
+	t_matrix4	temp;
+	int			i;
+
+	m4_identity(rotation_matrix);
+	rotation_matrix[0] = cos(angle);
+	rotation_matrix[8] = -sin(angle);
+	rotation_matrix[2] = sin(angle);
+	rotation_matrix[10] = cos(angle);
+	i = 0;
+	while (i < 16)
+	{
+		temp[i] = mat[i];
+		i++;
+	}
+	m4_mul(temp, rotation_matrix, mat);
+}
+
+void	m4_rotate_zaxis(t_matrix4 mat, double angle)
+{
+	t_matrix4	 rotation_matrix;
+	t_matrix4	temp;
+	int			i;
+
+	m4_identity(rotation_matrix);
+	rotation_matrix[0] = cos(angle);
+	rotation_matrix[1] = -sin(angle);
+	rotation_matrix[4] = sin(angle);
+	rotation_matrix[5] = cos(angle);
+	i = 0;
+	while (i < 16)
+	{
+		temp[i] = mat[i];
+		i++;
+	}
+	m4_mul(temp, rotation_matrix, mat);
 }

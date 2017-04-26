@@ -33,7 +33,7 @@ INC = -I ./includes -I $(LIBFTFOLDER) -I $(LMLXFOLDER)
 
 LIB = libft.a
 
-LIBFLAGS = -lft -L $(LIBFTFOLDER) -lmlx -L $(LMLXFOLDER)
+LIBFLAGS = -lft -L $(LIBFTFOLDER) -lmlx -L $(LMLXFOLDER) -lm
 
 LIBFTFOLDER = ./libft/
 

@@ -41,6 +41,7 @@ typedef struct	s_fdf
 {
 	t_window	wind;
 	t_vector4	**map;
+	t_vector4	center;
 	int			map_rows;
 	int			map_columns;
 }				t_fdf;
@@ -57,10 +58,13 @@ void		m4_add(t_matrix4 a, t_matrix4 b, t_matrix4 c);
 void		m4_sub(t_matrix4 a, t_matrix4 b, t_matrix4 c);
 void		m4_mul(t_matrix4 a, t_matrix4 b, t_matrix4 c);
 double		m4_det(t_matrix4);
+void		m4_identity(t_matrix4 m);
 
-
-void		translate_m4(t_matrix4 res, double x, double y, double z);
-void		scale_m4(t_matrix4 res, double x, double y, double z);
+void		m4_translate(t_matrix4 res, double x, double y, double z);
+void		m4_scale(t_matrix4 res, double x, double y, double z);
+void		m4_rotate_xaxis(t_matrix4 mat, double angle);
+void		m4_rotate_yaxis(t_matrix4 mat, double angle);
+void		m4_rotate_zaxis(t_matrix4 mat, double angle);
 
 void		v4_x_m4(t_vector4 *v, t_matrix4 m);
 
