@@ -18,6 +18,10 @@
 # define WIN_HEIGHT	720
 # define WIN_WIDTH	1280
 
-void	draw_line(int *data_map, t_vector2 from, t_vector2 to, int color);
-int		fdf(char *map_file);
+void	    map_change(t_vector4** map, int rows, int columns, t_matrix4 mat);
+t_vector4	**read_map(char *map_file, int *rows, int* columns);
+void		draw_line(int *data_map, t_vector2 from, t_vector2 to, int color);
+void		draw_map(t_vector4 **map, int rows, int columns, t_window *wind);
+int	        fdf(char *map_file);
+
 #endif
