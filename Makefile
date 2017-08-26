@@ -21,7 +21,9 @@ SRC_FILES = 	main.c						\
 				fdf.c						\
 				matrix4.c 					\
 				vector4.c					\
-				v_and_m.c
+				v_and_m.c					\
+				map_output.c				\
+				read_map.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
@@ -38,11 +40,11 @@ LIBFLAGS = -lft -L $(LIBFTFOLDER) -lmlx -L $(LMLXFOLDER) -lm
 LIBFTFOLDER = ./libft/
 
 
-#LMLXFOLDER = ./minilibx_macos
-LMLXFOLDER = ./minilibx
+LMLXFOLDER = ./minilibx_macos
+#LMLXFOLDER = ./minilibx
 
-FRAMEWORKS = -lXext -lX11
-#FRAMEWORKS = -framework OpenGL -framework AppKit
+#FRAMEWORKS = -lXext -lX11
+FRAMEWORKS = -framework OpenGL -framework AppKit
 
 FLAGS = -Werror -Wextra -Wall
 
