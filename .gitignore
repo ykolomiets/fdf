@@ -1,3 +1,6 @@
 libft/obj/
 obj/
 .idea
+cmake-build-debug/
+*.a
+*.out
