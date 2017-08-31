@@ -12,7 +12,7 @@ int     v2_mult_by_scalar(vector2 a, float c)
 
 int     v2_div_by_scalar(vector2 a, float c)
 {
-    if (fabs(c) < 0.000001)
+    if (fabs(c) < 0.0005)
         return (1);
     else
     {
@@ -38,4 +38,9 @@ float   v2_cross_product(vector2 a, vector2 b)
     res = a[0] * b[1] - a[1] * b[0];
 
     return (res);
+}
+
+float   v2_magnitude(vector2 a)
+{
+    return sqrt(a[0] * a[0] + a[1] * a[1]);
 }
