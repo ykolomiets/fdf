@@ -61,4 +61,14 @@ int             m4_inverse(matrix4 m, matrix4 res);
 
 void            m4_mult_hv(matrix4 m, hvector v, hvector res);
 
+matrix4         m4_scale(float a, float b, float c);
+matrix4         m4_translate(float a, float b, float c);
+matrix4         m4_rotate_x(float angle);
+matrix4         m4_rotate_y(float angle);
+matrix4         m4_rotate_z(float angle);
+matrix4         m4_shear_x(float dy, float dz);
+matrix4         m4_shear_y(float dx, float dz);
+matrix4         m4_shear_z(float dx, float dy);
+matrix4         m4_rotate_about_vector(hvector v, float angle);
+
 #endif
