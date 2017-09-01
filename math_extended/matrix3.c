@@ -19,7 +19,7 @@ matrix3     m3_create_identity()
 {
     matrix3 res;
 
-    re3 = m3_create_null();
+    res = m3_create_null();
     res[0] = 1;
     res[4] = 1;
     res[8] = 1;

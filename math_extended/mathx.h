@@ -40,7 +40,7 @@ int             v3_mult_by_scalar(vector3 a, float c);
 int             v3_div_by_scalar(vector3 a, float c);
 float           v3_dot_product(vector3 a, vector3 b);
 vector3         v3_cross_product(vector3 a, vector3 b);
-vector3         v3_magnitude(vector3 a);
+float           v3_magnitude(vector3 a);
 
 hvector         hv_create_point(float x, float y, float z);
 hvector         hv_create_direction(float x, float y, float z);
@@ -58,5 +58,7 @@ void            m4_sub(matrix4 a, matrix4 b, matrix4 res);
 void            m4_submat(matrix4 m, matrix3 sub, int i, int j);
 float           m4_det(matrix4 m);
 int             m4_inverse(matrix4 m, matrix4 res);
+
+void            m4_mult_hv(matrix4 m, hvector v, hvector res);
 
 #endif
