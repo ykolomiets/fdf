@@ -70,5 +70,8 @@ matrix4         m4_shear_x(float dy, float dz);
 matrix4         m4_shear_y(float dx, float dz);
 matrix4         m4_shear_z(float dx, float dy);
 matrix4         m4_rotate_about_vector(hvector v, float angle);
+matrix4         m4_rotate_from_euler(float angle_x, float angle_y, float angle_z);
+matrix4         m4_rotate_basis_to_basis(matrix4 orig, matrix4 final);
+
 
 #endif

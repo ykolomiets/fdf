@@ -57,3 +57,31 @@ matrix4         m4_rotate_about_vector(hvector v, float angle)
 
     return (res);
 }
+
+matrix4         m4_rotate_from_euler(float angle_x, float angle_y, float angle_z)
+{
+    matrix4 res;
+    float   saved[8];
+
+    saved[0] = cos(angle_x); //a
+    saved[1] = sin(angle_x); //b
+    saved[2] = cos(angle_y); //c
+    saved[3] = sin(angle_y); //d
+    saved[4] = cos(angle_z); //e
+    saved[5] = sin(angle_z); //f
+    saved[6] = saved[0] * saved[3]; //ad
+    saved[7] = saved[1] * saved[3]; //bd
+
+    res = m3_create_identity();
+    mat[0]  =   saved[2] * saved[4];
+    mat[1]  =  -saved[2] * saved[5];
+    mat[2]  =   saved[3];
+    mat[4]  =   saved[7] * saved[4] + saved[0] * saved[5];
+    mat[5]  =  -saved[7] * saved[5] + saved[0] * saved[4];
+    mat[6]  =  -saved[1] * saved[2];
+    mat[8]  =  -saved[6] * saved[4] + saved[1] * saved[5];
+    mat[9]  =   saved[6] * saved[5] + saved[1] * saved[4];
+    mat[10] =   saved[0] * saved[2];
+
+    return (res);
+}

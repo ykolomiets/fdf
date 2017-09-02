@@ -43,6 +43,7 @@ float   m4_det(matrix4 m)
         n++;
         i *= -1;
     }
+    free(sub_matrix);
 
     return (res);
 }
@@ -74,6 +75,8 @@ int     m4_inverse(matrix4 m, matrix4 res)
         }
         i++;
     }
+    free(mtemp);
+
     return (1);
 }
 
