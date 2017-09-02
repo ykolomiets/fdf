@@ -13,7 +13,7 @@ int     v3_mult_by_scalar(vector3 a, float c)
 
 int     v3_div_by_scalar(vector3 a, float c)
 {
-    if (fabs(c) < 0.0005)
+    if (fabsf(c) < 0.0005)
         return (1);
     else
     {

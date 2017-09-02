@@ -43,7 +43,7 @@ int         m3_inverse(matrix3 m, matrix3 res)
     float   det;
 
     det = m3_det(m);
-    if (fabs(det) < 0.0005)
+    if (fabsf(det) < 0.0005)
         return (0);
     res[0] =    m[4] * m[8] - m[5] * m[7]   / det;
     res[1] = -( m[1] * m[8] - m[7] * m[2] ) / det;

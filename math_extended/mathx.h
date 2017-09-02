@@ -30,6 +30,7 @@ int             v2_div_by_scalar(vector2 a, float c);
 float           v2_dot_product(vector2 a, vector2 b);
 float           v2_cross_product(vector2 a, vector2 b);
 float           v2_magnitude(vector2 a);
+void            v2_normalize(vector2 a);
 
 vector3         v3_create(float x, float y, float z);
 vector3         v3_add(vector3 a, vector3 b);
@@ -41,9 +42,11 @@ int             v3_div_by_scalar(vector3 a, float c);
 float           v3_dot_product(vector3 a, vector3 b);
 vector3         v3_cross_product(vector3 a, vector3 b);
 float           v3_magnitude(vector3 a);
+void            v3_normalize(vector3 v);
 
 hvector         hv_create_point(float x, float y, float z);
 hvector         hv_create_direction(float x, float y, float z);
+void            hv_normalize(hvector v);
 
 matrix3         m3_create_null();
 matrix3         m3_create_identity();

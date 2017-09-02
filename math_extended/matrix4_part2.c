@@ -1,5 +1,6 @@
 #include "mathx.h"
 #include <math.h>
+#include <stdlib.h>
 
 void    m4_submat(matrix4 m, matrix3 sub, int i, int j)
 {
@@ -57,7 +58,7 @@ int     m4_inverse(matrix4 m, matrix4 res)
     int     sign;
 
     det = m4_det(m);
-    if (fabs(det) < 0.0005)
+    if (fabsf(det) < 0.0005)
         return (0);
 
     sign = 1;

@@ -1,5 +1,4 @@
 #include "mathx.h"
-#include <stdlib.h>
 #include <math.h>
 
 int     v2_mult_by_scalar(vector2 a, float c)
@@ -12,7 +11,7 @@ int     v2_mult_by_scalar(vector2 a, float c)
 
 int     v2_div_by_scalar(vector2 a, float c)
 {
-    if (fabs(c) < 0.0005)
+    if (fabsf(c) < 0.0005)
         return (1);
     else
     {
