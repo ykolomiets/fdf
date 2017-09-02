@@ -1,0 +1,80 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mathx.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/30 22:47:27 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/04/20 16:19:38 by ykolomie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MATHX_H
+# define MATHX_H
+
+typedef float   *vector2;
+typedef float   *vector3;
+typedef float   *hvector;
+
+typedef float   *matrix3;
+typedef float   *matrix4;
+
+vector2         v2_create(float x, float y);
+vector2         v2_add(vector2 a, vector2 b);
+vector2         v2_sub(vector2 a, vector2 b);
+int             v2_add_with_res(vector2 a, vector2 b, vector2 res);
+int             v2_sub_with_res(vector2 a, vector2 b, vector2 res);
+int             v2_mult_by_scalar(vector2 a, float c);
+int             v2_div_by_scalar(vector2 a, float c);
+float           v2_dot_product(vector2 a, vector2 b);
+float           v2_cross_product(vector2 a, vector2 b);
+float           v2_magnitude(vector2 a);
+void            v2_normalize(vector2 a);
+
+vector3         v3_create(float x, float y, float z);
+vector3         v3_add(vector3 a, vector3 b);
+vector3         v3_sub(vector3 a, vector3 b);
+int             v3_add_with_res(vector3 a, vector3 b, vector3 res);
+int             v3_sub_with_res(vector3 a, vector3 b, vector3 res);
+int             v3_mult_by_scalar(vector3 a, float c);
+int             v3_div_by_scalar(vector3 a, float c);
+float           v3_dot_product(vector3 a, vector3 b);
+vector3         v3_cross_product(vector3 a, vector3 b);
+float           v3_magnitude(vector3 a);
+void            v3_normalize(vector3 v);
+
+hvector         hv_create_point(float x, float y, float z);
+hvector         hv_create_direction(float x, float y, float z);
+void            hv_normalize(hvector v);
+
+matrix3         m3_create_null();
+matrix3         m3_create_identity();
+float           m3_det(matrix3 m);
+int             m3_inverse(matrix3 m, matrix3 res);
+
+matrix4         m4_create_null();
+matrix4         m4_create_identity();
+void            m4_mult(matrix4 a, matrix4 b, matrix4 res);
+void            m4_add(matrix4 a, matrix4 b, matrix4 res);
+void            m4_sub(matrix4 a, matrix4 b, matrix4 res);
+void            m4_submat(matrix4 m, matrix3 sub, int i, int j);
+float           m4_det(matrix4 m);
+int             m4_inverse(matrix4 m, matrix4 res);
+
+void            m4_mult_hv(matrix4 m, hvector v, hvector res);
+
+matrix4         m4_scale(float a, float b, float c);
+matrix4         m4_translate(float a, float b, float c);
+matrix4         m4_rotate_x(float angle);
+matrix4         m4_rotate_y(float angle);
+matrix4         m4_rotate_z(float angle);
+matrix4         m4_shear_x(float dy, float dz);
+matrix4         m4_shear_y(float dx, float dz);
+matrix4         m4_shear_z(float dx, float dy);
+matrix4         m4_rotate_about_vector(hvector v, float angle);
+matrix4         m4_rotate_from_euler(float angle_x, float angle_y, float angle_z);
+matrix4         m4_rotate_basis_to_basis(matrix4 orig, matrix4 final);
+
+
+#endif
