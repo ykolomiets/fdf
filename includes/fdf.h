@@ -13,6 +13,8 @@
 #ifndef FDF_H
 # define FDF_H
 
+#include "base_structures.h"
+
 void        fdf(char    *file_name);
 
 #endif

@@ -13,4 +13,19 @@
 #ifndef BASE_STRUCTURES_H
 # define BASE_STRUCTURES_H
 
+#include "mathx.h"
+
+typedef struct      s_vertex
+{
+    hvector         position;
+    int             color;
+}                   t_vertex;
+
+typedef struct      s_line_segment
+{
+    hvector         p1;
+    hvector         p2;
+}                   t_line_segment;
+
+
 #endif
