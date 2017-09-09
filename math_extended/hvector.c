@@ -1,6 +1,7 @@
 #include "mathx.h"
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 hvector hv_create_point(float x, float y, float z)
 {
@@ -39,4 +40,9 @@ void    hv_normalize(hvector v)
         v[1] /= magnitude;
         v[2] /= magnitude;
     }
+}
+
+void    hv_print(hvector v)
+{
+    printf("<%.3f, %.3f, %.3f, %.3f>\n", v[0], v[1], v[2], v[3]);
 }

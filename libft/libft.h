@@ -40,6 +40,7 @@ void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
+void            *ft_malloc_2d_array(int rows, int columns, int elem_size);
 
 char			*ft_strcat(char *dest, const char *src);
 char			*ft_strchr(const char *s, int c);
@@ -70,6 +71,7 @@ char			*ft_strtrim(char const *s);
 char			**ft_strsplit(char const *s, char c);
 void			ft_free_table(char ***table, int size);
 int				ft_count_word(char const *s, char delimetr);
+int 			ft_table_size(char **table);
 
 char			*ft_itoa(int n);
 int				ft_atoi(const char *nptr);

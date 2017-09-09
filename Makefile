@@ -18,6 +18,8 @@ OBJDIR = ./obj/
 
 SRC_FILES = 	main.c						\
 				fdf.c						\
+				base_structures.c			\
+				read_map.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
@@ -25,13 +27,15 @@ SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
 
 OBJ = $(addprefix $(OBJDIR), $(OBJ_FILES))
 
-INC = -I ./includes -I $(LIBFTFOLDER) -I $(LMLXFOLDER)
+INC = -I ./includes -I $(LIBFTFOLDER) -I $(LMLXFOLDER) -I $(LIBMATHXFOLDER)
 
 LIB = libft.a
 
-LIBFLAGS = -lft -L $(LIBFTFOLDER) -lmlx -L $(LMLXFOLDER) -lm
+LIBFLAGS = -lft -L $(LIBFTFOLDER) -lmlx -L $(LMLXFOLDER) -lm -L $(LIBMATHXFOLDER) -lmathx
 
 LIBFTFOLDER = ./libft/
+
+LIBMATHXFOLDER = ./math_extended/
 
 
 LMLXFOLDER = ./minilibx_macos
