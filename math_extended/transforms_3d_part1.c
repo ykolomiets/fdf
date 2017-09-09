@@ -1,5 +1,5 @@
 #include "mathx.h"
-#include "math.x"
+#include "math.h"
 
 
 matrix4     m4_scale(float a, float b, float c)

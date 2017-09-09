@@ -17,13 +17,7 @@ SRCDIR = ./srcs/
 OBJDIR = ./obj/
 
 SRC_FILES = 	main.c						\
-				draw_line.c					\
 				fdf.c						\
-				matrix4.c 					\
-				vector4.c					\
-				v_and_m.c					\
-				map_output.c				\
-				read_map.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
