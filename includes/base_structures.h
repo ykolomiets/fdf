@@ -27,5 +27,13 @@ typedef struct      s_line_segment
     hvector         p2;
 }                   t_line_segment;
 
+typedef struct      s_map
+{
+    t_vertex        **verts;
+    int             rows;
+    int             cols;
+}                   t_map;
+
+void                print_vertex(t_vertex *v);
 
 #endif

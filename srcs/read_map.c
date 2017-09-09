@@ -9,10 +9,10 @@
 #include <unistd.h>
 #include <stdio.h>
 
-t_vector4	**malloc_map(int fd, char ***splited, int *rows, int *columns)
+t_vertex	**malloc_map(int fd, char ***splited, int *rows, int *columns)
 {
     char		*file;
-    t_vector4	**res;
+    t_vertex	**res;
     int         j;
 
     file = read_file(fd);
@@ -20,9 +20,9 @@ t_vector4	**malloc_map(int fd, char ***splited, int *rows, int *columns)
     free(file);
     *rows = 0;
     *columns = 0;
-    while ((*splited)[(*rows)++])
+    while ((*splited)[(*rows)])
     {
-        j = ft_count_word(temp_str, '\t');
+        j = ft_count_word((*splited)[(*rows)++], ' ');
         if (*rows == 1)
             *columns = j;
         else if (*columns != j)
@@ -31,17 +31,55 @@ t_vector4	**malloc_map(int fd, char ***splited, int *rows, int *columns)
             return (0);
         }
     }
-    ft_free_table(*splited, *rows);
-    res = ft_malloc_2d_array(*rows, *columns, sizeof(t_vertex));
+    res = (t_vertex **)ft_malloc_2d_array(*rows, *columns, sizeof(t_vertex));
     return (res);
 }
 
-int			fill_map(t_vector4 **map, char **splited, int rows, int columns)
+int         color_from_string(char *str)
+{
+    int res;
+
+    res = -1;
+    if (ft_strlen(str) == 8 &&
+            (str[0] == '0' && str[1] == 'x'))
+        res = ft_atoi_base(str + 2, "0123456789ABCDEF");
+    else
+        ft_putendl("wrong color format");
+    return (res);
+}
+
+int         fill_vertex(t_vertex *ver, int x, int y, char **info)
+{
+    size_t  i;
+    float   z;
+
+    i = 0;
+    while (info[0][i] && ft_isdigit((int)info[0][i]))
+        i++;
+    if (i == ft_strlen(info[0]))
+        z = (float) ft_atoi(info[0]);
+    else
+    {
+        ft_putendl("error: wrong coord");
+        return (1);
+    }
+    ver->position = hv_create_point((float)x, (float)y, z);
+    if (info[1])
+        ver->color = color_from_string(info[1]);
+    else
+        ver->color = 0xffffff;
+    print_vertex(ver);
+    return (0);
+}
+
+int			fill_map(t_vertex **map, char **splited, int rows, int columns)
 {
     int		i;
     int		j;
-    char	**temp;
+    char    **temp;
+    char    **vertex_info;
 
+    ft_putendl("fill_map");
     i = 0;
     while (i < rows)
     {
@@ -49,10 +87,14 @@ int			fill_map(t_vector4 **map, char **splited, int rows, int columns)
         temp = ft_strsplit(splited[i], ' ');
         while (j < columns)
         {
-            map[i][j].x = j;
-            map[i][j].y = i;
-            map[i][j].z = -ft_atoi(temp[j]);
-            map[i][j].w = 1;
+            vertex_info = ft_strsplit(temp[j], ',');
+            if (fill_vertex(&map[i][j], i, j, vertex_info))
+            {
+                ft_free_table(&temp, columns);
+                ft_free_table(&vertex_info, ft_table_size(vertex_info));
+                return (1);
+            }
+            ft_free_table(&vertex_info, ft_table_size(vertex_info));
             j++;
         };
         ft_free_table(&temp, columns);
@@ -61,20 +103,21 @@ int			fill_map(t_vector4 **map, char **splited, int rows, int columns)
     return (0);
 }
 
-t_vertex    *read_map(char *map_file, int *rows, int *cols)
+int       read_map(char *map_file, t_map *map)
 {
-    t_vertex    *res;
+    int         res;
     char        **splited;
     int         fd;
 
     fd = open(map_file, O_RDONLY);
+    res = 1;
     if (fd)
     {
-        res = malloc_map(fd, &splited, rows, columns);
-        fill_map(res, splited, *rows, *columns);
-        pretty_look(res, *rows, *columns);
-        ft_free_table(&splited, *rows);
+        map->verts = malloc_map(fd, &splited, &(map->rows), &(map->cols));
+        if (map->verts && !fill_map(map->verts, splited, map->rows, map->cols))
+            res = 0;
+        ft_free_table(&splited, map->rows);
         close(fd);
     }
-    return (0);
+    return (res);
 }

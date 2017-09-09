@@ -18,6 +18,8 @@ OBJDIR = ./obj/
 
 SRC_FILES = 	main.c						\
 				fdf.c						\
+				base_structures.c			\
+				read_map.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
