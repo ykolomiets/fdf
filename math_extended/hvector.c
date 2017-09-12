@@ -42,6 +42,11 @@ void    hv_normalize(hvector v)
     }
 }
 
+hvector hv_vector_from_points(hvector p1, hvector p2)
+{
+    return hv_create_direction(p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]);
+}
+
 void    hv_print(hvector v)
 {
     printf("<%.3f, %.3f, %.3f, %.3f>\n", v[0], v[1], v[2], v[3]);

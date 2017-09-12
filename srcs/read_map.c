@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdio.h>
 
 t_vertex	**malloc_map(int fd, char ***splited, int *rows, int *columns)
 {
@@ -27,7 +26,7 @@ t_vertex	**malloc_map(int fd, char ***splited, int *rows, int *columns)
             *columns = j;
         else if (*columns != j)
         {
-            ft_putendl("map is not rectangle");
+            ft_putendl("error: map is not rectangle");
             return (0);
         }
     }
@@ -44,11 +43,11 @@ int         color_from_string(char *str)
             (str[0] == '0' && str[1] == 'x'))
         res = ft_atoi_base(str + 2, "0123456789ABCDEF");
     else
-        ft_putendl("wrong color format");
+        ft_putendl("error: wrong color format");
     return (res);
 }
 
-int         fill_vertex(t_vertex *ver, int x, int y, char **info)
+int         fill_vertex(t_vertex *ver, float x, float y, char **info)
 {
     size_t  i;
     float   z;
@@ -63,7 +62,7 @@ int         fill_vertex(t_vertex *ver, int x, int y, char **info)
         ft_putendl("error: wrong coord");
         return (1);
     }
-    ver->position = hv_create_point((float)x, (float)y, z);
+    ver->position = hv_create_point(x, y, z);
     if (info[1])
         ver->color = color_from_string(info[1]);
     else
@@ -79,7 +78,6 @@ int			fill_map(t_vertex **map, char **splited, int rows, int columns)
     char    **temp;
     char    **vertex_info;
 
-    ft_putendl("fill_map");
     i = 0;
     while (i < rows)
     {
@@ -88,7 +86,7 @@ int			fill_map(t_vertex **map, char **splited, int rows, int columns)
         while (j < columns)
         {
             vertex_info = ft_strsplit(temp[j], ',');
-            if (fill_vertex(&map[i][j], i, j, vertex_info))
+            if (fill_vertex(&map[i][j], (i - rows) / 2.0, (j - columns) / 2.0, vertex_info))
             {
                 ft_free_table(&temp, columns);
                 ft_free_table(&vertex_info, ft_table_size(vertex_info));

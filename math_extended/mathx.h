@@ -47,6 +47,7 @@ void            v3_normalize(vector3 v);
 hvector         hv_create_point(float x, float y, float z);
 hvector         hv_create_direction(float x, float y, float z);
 void            hv_normalize(hvector v);
+hvector         hv_vector_from_points(hvector p1, hvector p2);
 void            hv_print(hvector v);
 
 matrix3         m3_create_null();

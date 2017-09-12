@@ -14,6 +14,7 @@
 # define BASE_STRUCTURES_H
 
 #include "mathx.h"
+#include "mlx.h"
 
 typedef struct      s_vertex
 {
@@ -33,6 +34,40 @@ typedef struct      s_map
     int             rows;
     int             cols;
 }                   t_map;
+
+typedef struct      s_camera
+{
+    vector3         eye;
+    vector3         gaze;
+    vector3         view_up;
+}                   t_camera;
+
+typedef struct      s_box
+{
+    float           left;
+    float           right;
+    float           top;
+    float           bottom;
+    float           near;
+    float           far;
+}                   t_box;
+
+typedef struct      s_world
+{
+    void            *mlx;
+    void            *window;
+    void            *image;
+    int             *pixels;
+    int             bits_per_pixel;
+    int             size_line;
+    int             endian;
+    int             height;
+    int             width;
+    t_map           map;
+    t_camera        camera;
+    t_box           box;
+    int             view_type;
+}                   t_world;
 
 void                print_vertex(t_vertex *v);
 
