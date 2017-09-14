@@ -30,7 +30,7 @@ matrix4     create_orth_transform(t_box *box)
 
 matrix4     create_camera_transform(t_camera *camera)
 {
-    vector3 u, v, w;
+    vector3 uvw[3];
     matrix4 move_e;
     matrix4 m_uvw;
     matrix4 res;
@@ -40,20 +40,20 @@ matrix4     create_camera_transform(t_camera *camera)
     move_e[7] = -camera->eye[1];
     move_e[11] = -camera->eye[2];
     m_uvw = m4_create_identity();
-    w = v3_create(-camera->gaze[0], -camera->gaze[1], -camera->gaze[2]);
-    v3_normalize(w);
-    u = v3_cross_product(w, camera->view_up);
-    v3_normalize(u);
-    v = v3_cross_product(w, u);
-    m_uvw[0] = u[0];
-    m_uvw[1] = u[1];
-    m_uvw[2] = u[2];
-    m_uvw[4] = v[0];
-    m_uvw[5] = v[1];
-    m_uvw[6] = v[2];
-    m_uvw[8] = w[0];
-    m_uvw[9] = w[1];
-    m_uvw[10] = w[2];
+    uvw[2] = v3_create(-camera->gaze[0], -camera->gaze[1], -camera->gaze[2]);
+    v3_normalize(uvw[2]);
+    uvw[0] = v3_cross_product(uvw[2], camera->view_up);
+    v3_normalize(uvw[0]);
+    uvw[1] = v3_cross_product(uvw[2], uvw[0]);
+    m_uvw[0] = uvw[0][0];
+    m_uvw[1] = uvw[0][1];
+    m_uvw[2] = uvw[0][2];
+    m_uvw[4] = uvw[1][0];
+    m_uvw[5] = uvw[1][1];
+    m_uvw[6] = uvw[1][2];
+    m_uvw[8] = uvw[2][0];
+    m_uvw[9] = uvw[2][1];
+    m_uvw[10] = uvw[2][2];
     res = m4_create_null();
     m4_mult(m_uvw, move_e, res);
 
