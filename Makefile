@@ -19,7 +19,9 @@ OBJDIR = ./obj/
 SRC_FILES = 	main.c						\
 				fdf.c						\
 				base_structures.c			\
-				read_map.c
+				read_map.c				\
+				viewing_transformations.c		\
+				rasterization.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
@@ -44,7 +46,9 @@ LMLXFOLDER = ./minilibx_macos
 #FRAMEWORKS = -lXext -lX11
 FRAMEWORKS = -framework OpenGL -framework AppKit
 
-FLAGS = -Werror -Wextra -Wall
+#RETURN FLAGS PLEASE
+#FLAGS = -Werror -Wextra -Wall
+FLAGS = -Werror
 
 CC = clang
 

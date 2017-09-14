@@ -24,15 +24,18 @@ typedef struct      s_vertex
 
 typedef struct      s_line_segment
 {
-    hvector         p1;
-    hvector         p2;
+    t_vertex        *p1;
+    t_vertex        *p2;
 }                   t_line_segment;
 
 typedef struct      s_map
 {
     t_vertex        **verts;
+    t_line_segment  *lines;
+    int             line_count;
     int             rows;
     int             cols;
+    t_vertex        **transformed;
 }                   t_map;
 
 typedef struct      s_camera
@@ -70,5 +73,7 @@ typedef struct      s_world
 }                   t_world;
 
 void                print_vertex(t_vertex *v);
+void                print_line_segment(t_line_segment *l);
+void                print_matrix4(matrix4 m);
 
 #endif
