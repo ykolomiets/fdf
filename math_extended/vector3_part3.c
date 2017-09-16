@@ -1,7 +1,8 @@
 #include "mathx.h"
 #include <math.h>
+#include <stdio.h>
 
-void    v3_normalize(vector3 v)
+vector3    v3_normalize(vector3 v)
 {
     float   magnitude;
 
@@ -12,4 +13,5 @@ void    v3_normalize(vector3 v)
         v[1] /= magnitude;
         v[2] /= magnitude;
     }
+    return (v);
 }

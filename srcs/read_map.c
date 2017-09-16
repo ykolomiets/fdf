@@ -61,6 +61,8 @@ int         fill_vertex(t_vertex *ver, float x, float y, char **info)
     float   z;
 
     i = 0;
+    if (info[0][i] == '-')
+        i++;
     while (info[0][i] && ft_isdigit((int)info[0][i]))
         i++;
     if (i == ft_strlen(info[0]))
@@ -75,7 +77,6 @@ int         fill_vertex(t_vertex *ver, float x, float y, char **info)
         ver->color = color_from_string(info[1]);
     else
         ver->color = 0xffffff;
-    print_vertex(ver);
     return (0);
 }
 
@@ -119,7 +120,6 @@ t_line_segment  *form_line_segments(t_vertex **verts, int *lines_count, int cols
     if (*lines_count)
     {
         lines = (t_line_segment *)malloc(sizeof(t_line_segment) * (*lines_count));
-        printf("LINES TOTAL: %d\n", *lines_count);
         k = -1;
         while(rows--)
         {
@@ -138,7 +138,6 @@ t_line_segment  *form_line_segments(t_vertex **verts, int *lines_count, int cols
                     lines[k].p2 = &verts[rows][i + 1];
                 }
             }
-            printf("LINES Left: %d\n", (*lines_count) - k);
         }
     }
     else

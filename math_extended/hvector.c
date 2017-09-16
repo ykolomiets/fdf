@@ -29,7 +29,7 @@ hvector hv_create_direction(float x, float y, float z)
     return (vec);
 }
 
-void    hv_normalize(hvector v)
+hvector hv_normalize(hvector v)
 {
     float   magnitude;
 
@@ -40,6 +40,7 @@ void    hv_normalize(hvector v)
         v[1] /= magnitude;
         v[2] /= magnitude;
     }
+    return (v);
 }
 
 hvector hv_vector_from_points(hvector p1, hvector p2)

@@ -31,9 +31,9 @@ matrix4     m4_rotate_z(float angle)
     matrix4 res;
 
     res = m4_create_identity();
-    res[0] = cos(angle);
+    res[0] = cosf(angle);
     res[5] = res[0];
-    res[1] = sin(angle);
+    res[1] = sinf(angle);
     res[4] = -res[1];
 
     return (res);
@@ -44,8 +44,8 @@ matrix4     m4_rotate_x(float angle)
     matrix4 res;
 
     res = m4_create_identity();
-    res[5] = cos(angle);
-    res[9] = sin(angle);
+    res[5] = cosf(angle);
+    res[9] = sinf(angle);
     res[6] = -res[9];
     res[10] = res[5];
 
@@ -57,8 +57,8 @@ matrix4     m4_rotate_y(float angle)
     matrix4 res;
 
     res = m4_create_identity();
-    res[0] = cos(angle);
-    res[2] = sin(angle);
+    res[0] = cosf(angle);
+    res[2] = sinf(angle);
     res[8] = -res[2];
     res[10] = res[0];
 

@@ -17,6 +17,5 @@
 
 int         read_map(char *map_file, t_map *map);
 void        fdf(char    *file_name);
-void        test();
 
 #endif

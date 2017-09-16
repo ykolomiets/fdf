@@ -1,7 +1,7 @@
 #include "mathx.h"
 #include <math.h>
 
-void            v2_normalize(vector2 a)
+vector2         v2_normalize(vector2 a)
 {
     float magnitude;
 
@@ -11,4 +11,5 @@ void            v2_normalize(vector2 a)
         a[0] /= magnitude;
         a[1] /= magnitude;
     }
+    return (a);
 }

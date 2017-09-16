@@ -42,9 +42,9 @@ matrix4         m4_rotate_about_vector(hvector v, float angle)
     float   diff;
 
     res = m4_create_identity();
-    rcos = cos(angle);
+    rcos = cosf(angle);
     diff = 1 - rcos;
-    rsin = sin(angle);
+    rsin = sinf(angle);
     res[0] =         rcos + v[0] * v[0] * diff;
     res[4] =  v[2] * rsin + v[1] * v[0] * diff;
     res[8] = -v[1] * rsin + v[2] * v[0] * diff;
@@ -63,12 +63,12 @@ matrix4         m4_rotate_from_euler(float angle_x, float angle_y, float angle_z
     matrix4 res;
     float   saved[8];
 
-    saved[0] = cos(angle_x);
-    saved[1] = sin(angle_x);
-    saved[2] = cos(angle_y);
-    saved[3] = sin(angle_y);
-    saved[4] = cos(angle_z);
-    saved[5] = sin(angle_z);
+    saved[0] = cosf(angle_x);
+    saved[1] = sinf(angle_x);
+    saved[2] = cosf(angle_y);
+    saved[3] = sinf(angle_y);
+    saved[4] = cosf(angle_z);
+    saved[5] = sinf(angle_z);
     saved[6] = saved[0] * saved[3];
     saved[7] = saved[1] * saved[3];
 

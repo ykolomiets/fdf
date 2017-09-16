@@ -56,3 +56,34 @@ int         m3_inverse(matrix3 m, matrix3 res)
     res[8] =    m[0] * m[4] - m[1] * m[3]   / det;
     return(1);
 }
+
+matrix3         m3_rotate_about_vector(vector3 v, float angle)
+{
+    matrix3 res;
+    float   rcos;
+    float   rsin;
+    float   diff;
+
+    res = m3_create_identity();
+    rcos = cosf(angle);
+    diff = 1 - rcos;
+    rsin = sinf(angle);
+    res[0] =         rcos + v[0] * v[0] * diff;
+    res[3] =  v[2] * rsin + v[1] * v[0] * diff;
+    res[6] = -v[1] * rsin + v[2] * v[0] * diff;
+    res[1] = -v[2] * rsin + v[0] * v[1] * diff;
+    res[4] =         rcos + v[1] * v[1] * diff;
+    res[7] =  v[0] * rsin + v[2] * v[1] * diff;
+    res[2] =  v[1] * rsin + v[0] * v[2] * diff;
+    res[5] = -v[0] * rsin + v[1] * v[2] * diff;
+    res[8] =         rcos + v[2] * v[2] * diff;
+
+    return (res);
+}
+
+void            m3_mult_v3(matrix3 m, vector3 v, vector3 res)
+{
+    res[0] = m[0] * v[0] + m[1] * v[1] + m[2] * v[2];
+    res[1] = m[3] * v[0] + m[4] * v[1] + m[5] * v[2];
+    res[2] = m[6] * v[0] + m[7] * v[1] + m[8] * v[2];
+}

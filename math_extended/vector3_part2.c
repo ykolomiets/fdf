@@ -46,5 +46,5 @@ vector3 v3_cross_product(vector3 a, vector3 b)
 
 float   v3_magnitude(vector3 a)
 {
-    return sqrt(a[0] * a[0] + a[1] * a[1] * a[2] * a[2]);
+    return sqrtf(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
 }

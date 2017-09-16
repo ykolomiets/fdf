@@ -16,6 +16,9 @@
 #include "mathx.h"
 #include "mlx.h"
 
+#define ORTHOGONAL 0
+#define PERSPECTIVE 1
+
 typedef struct      s_vertex
 {
     hvector         position;
