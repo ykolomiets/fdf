@@ -1,50 +1,41 @@
 #include "mathx.h"
-#include <stdlib.h>
 #include <math.h>
 
-int     v3_mult_by_scalar(vector3 a, float c)
-{
-    a[0] *= c;
-    a[1] *= c;
-    a[2] *= c;
-
-    return (0);
-}
-
-int     v3_div_by_scalar(vector3 a, float c)
-{
-    if (fabsf(c) < 0.0005)
-        return (1);
-    else
-    {
-        a[0] /= c;
-        a[1] /= c;
-        return (0);
-    }
-}
-
-float   v3_dot_product(vector3 a, vector3 b)
+float   v3_dot_product(t_vec3 *a, t_vec3 *b)
 {
     float   res;
 
-    res = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    res = a->x * b->x + a->y * b->y + a->z * b->z;
 
     return (res);
 }
 
-vector3 v3_cross_product(vector3 a, vector3 b)
+t_vec3  v3_cross_product(t_vec3 *a, t_vec3 *b)
 {
-    vector3 res;
+    t_vec3 res;
 
-    res = (vector3)malloc(3 * sizeof(float));
-    res[0] = a[1] * b[2] - a[2] * b[1];
-    res[1] = a[2] * b[0] - a[0] * b[2];
-    res[2] = a[0] * b[1] - a[1] * b[0];
+    res.x = a->y * b->z - a->z * b->y;
+    res.y = a->z * b->x - a->x * b->z;
+    res.z = a->x * b->y - a->y * b->x;
 
     return (res);
 }
 
-float   v3_magnitude(vector3 a)
+float   v3_magnitude(t_vec3 *a)
 {
-    return sqrtf(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+    return sqrtf(a->x * a->x + a->y * a->y + a->z * a->z);
+}
+
+t_vec3  v3_normalize(t_vec3 v)
+{
+    float   magnitude;
+
+    magnitude = v3_magnitude(&v);
+    if (fabsf(magnitude) > 0.00005)
+    {
+        v.x /= magnitude;
+        v.y /= magnitude;
+        v.z /= magnitude;
+    }
+    return (v);
 }

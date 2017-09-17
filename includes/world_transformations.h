@@ -1,9 +1,9 @@
-#ifndef FDF_WORLD_TRANSFORMS_H
-#define FDF_WORLD_TRANSFORMS_H
+#ifndef WORLD_TRANSFORMS_H
+#define WORLD_TRANSFORMS_H
 
 #include "base_structures.h"
 
-void    change_z(t_vertex **verts, int cols, int rows, float z);
-void    scale_all(t_vertex **verts, int rows, int cols, float coef);
+void    change_z(t_line *lines, int line_count, float z);
+void    scale_all(t_line *lines, int line_count, float coef);
 
-#endif //FDF_WORLD_TRANSFORMS_H
+#endif
