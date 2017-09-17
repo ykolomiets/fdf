@@ -21,31 +21,27 @@
 
 typedef struct      s_vertex
 {
-    hvector         position;
+    t_hvec          position;
     int             color;
 }                   t_vertex;
 
-typedef struct      s_line_segment
+typedef struct      s_line
 {
-    t_vertex        *p1;
-    t_vertex        *p2;
-}                   t_line_segment;
+    t_vertex        p1;
+    t_vertex        p2;
+}                   t_line;
 
 typedef struct      s_map
 {
-    t_vertex        **verts;
-    t_line_segment  *lines;
+    t_line          *lines;
     int             line_count;
-    int             rows;
-    int             cols;
-    t_vertex        **transformed;
 }                   t_map;
 
 typedef struct      s_camera
 {
-    vector3         eye;
-    vector3         gaze;
-    vector3         view_up;
+    t_vec3          eye;
+    t_vec3          gaze;
+    t_vec3          view_up;
 }                   t_camera;
 
 typedef struct      s_box
@@ -58,25 +54,26 @@ typedef struct      s_box
     float           far;
 }                   t_box;
 
-typedef struct      s_world
+typedef struct      s_image
+{
+    void            *image;
+    int             *pixels; // TRY ANOTHER DEVICE
+    int             bpp;
+    int             size_line;
+    int             endian;
+}                   t_image;
+
+typedef struct      s_fdf
 {
     void            *mlx;
     void            *window;
-    void            *image;
-    int             *pixels;
-    int             bits_per_pixel;
-    int             size_line;
-    int             endian;
     int             height;
     int             width;
+    t_image         image;
     t_map           map;
     t_camera        camera;
     t_box           box;
     int             view_type;
-}                   t_world;
-
-void                print_vertex(t_vertex *v);
-void                print_line_segment(t_line_segment *l);
-void                print_matrix4(matrix4 m);
+}                   t_fdf;
 
 #endif

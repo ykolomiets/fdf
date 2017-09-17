@@ -41,6 +41,8 @@ int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
 void            *ft_malloc_2d_array(int rows, int columns, int elem_size);
+void			ft_free_2d_array(void ***arr, int rows);
+
 
 char			*ft_strcat(char *dest, const char *src);
 char			*ft_strchr(const char *s, int c);

@@ -1,13 +1,14 @@
-#ifndef FDF_VIEWING_TRANFORMATIONS_H
-#define FDF_VIEWING_TRANFORMATIONS_H
+#ifndef VIEWING_TRANFORMATIONS_H
+#define VIEWING_TRANFORMATIONS_H
 
 #include "mathx.h"
 #include "base_structures.h"
 
 
-matrix4     create_vp_transfrom(int width, int height);
-matrix4     create_orth_transform(t_box *box);
-matrix4     create_camera_transform(t_camera *camera);
-matrix4     create_perspective_transform(t_box *box);
+void        create_vp_transfrom(int width, int height, matrix4 mvp);
+void        create_orth_transform(t_box *box, matrix4 morth);
+void        create_camera_transform(t_camera *camera, matrix4 mcam);
+void        create_perspective_transform(t_box *box, matrix4 mper);
+void        combine_all_transforms(t_fdf *all, matrix4 mres);
 
-#endif //FDF_VIEWING_TRANFORMATIONS_H
+#endif

@@ -1,129 +1,150 @@
 #include "fdf.h"
 #include "libft.h"
+#include "read_map.h"
 #include "viewing_tranformations.h"
 #include "rasterization.h"
 #include "camera_transformations.h"
 #include "world_transformations.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include "libft.h"
 
-#define PI 3.141592653589793f
-
-void        render(t_world  *w)
+void        clean_image(t_fdf *all)
 {
-    matrix4 mvp = create_vp_transfrom(w->width, w->height);
-    matrix4 m_orth_per;
-    if (w->view_type == ORTHOGONAL)
-        m_orth_per = create_orth_transform(&w->box);
-    else
-        m_orth_per = create_perspective_transform(&w->box);
-    matrix4 mcam = create_camera_transform(&w->camera);
-    matrix4 temp = m4_create_null();
-    matrix4 res = m4_create_null();
-    m4_mult(m_orth_per, mcam, temp);
-    m4_mult(mvp, temp, res);
-    for (int i = 0; i < w->map.rows; i++)
-    {
-        for (int j = 0; j < w->map.cols; j++)
-        {
-            m4_mult_hv(res, w->map.verts[i][j].position, w->map.transformed[i][j].position);
-            w->map.transformed[i][j].position[0] /= w->map.transformed[i][j].position[3];
-            w->map.transformed[i][j].position[1] /= w->map.transformed[i][j].position[3];
-        }
-    }
-    for (int i = 0; i < w->width; i++)
-        for (int j = 0; j < w->height; j++)
-            w->pixels[i * w->height + j] = 0;
-    for (int k = 0; k < w->map.line_count; k++)
-    {
-        draw_line_dda(&w->map.lines[k], w->pixels, w->width);
-    }
-    mlx_put_image_to_window(w->mlx, w->window, w->image, 0,0);
+    int total;
+    int *pixels;
+
+    total = all->width * all->height;
+    pixels = all->image.pixels;
+    while (total--)
+        pixels[total] = 0;
 }
 
-int         keys_hook(int keycode, t_world *world)
+void        print_line(t_line *line)
 {
-    t_camera    *camera;
-    matrix4     *trans;
+    printf("\nline:\n{\n"
+                   "\tp1: <%f, %f, %f, %f>\n"
+                   "\tp2: <%f, %f, %f, %f>\n"
+                   "}",
+           line->p1.position.x,
+           line->p1.position.y,
+           line->p1.position.z,
+           line->p1.position.w,
+           line->p2.position.x,
+           line->p2.position.y,
+           line->p2.position.z,
+           line->p2.position.w
+    );
+}
 
-    camera = &world->camera;
-    ft_putstr("KEYCODE: ");
-    ft_putnbr(keycode);
-    ft_putendl("\n");
+void        render(t_fdf  *all)
+{
+    matrix4 mres;
+    t_line  *transformed;
+    int     i;
+
+    combine_all_transforms(all, mres);
+    i = 0;
+    transformed = malloc(sizeof(t_line) * all->map.line_count);
+    clean_image(all);
+    while (i < all->map.line_count)
+    {
+        transformed[i].p1.position = m4_mult_hv(mres, &all->map.lines[i].p1.position);
+        transformed[i].p2.position = m4_mult_hv(mres, &all->map.lines[i].p2.position);
+        transformed[i].p1.position = hv_normalize(transformed[i].p1.position);
+        transformed[i].p2.position = hv_normalize(transformed[i].p2.position);
+        //print_line(&transformed[i]);
+        draw_line_dda(&transformed[i++], all);
+    }
+    mlx_put_image_to_window(all->mlx, all->window, all->image.image, 0, 0);
+}
+
+int         keys_hook(int keycode, t_fdf *all)
+{
     if (keycode == 53)
         exit(0);
     else if (keycode == 13)
-        camera_pitch(camera, -PI / 180);
+        camera_pitch(&(all->camera), -PI / 180);
     else if (keycode == 1)
-        camera_pitch(camera, PI / 180);
+        camera_pitch(&(all->camera), PI / 180);
     else if (keycode == 18)
-        world->view_type = ORTHOGONAL;
-    else if (keycode == 19)
-        world->view_type = PERSPECTIVE;
-    else if (keycode == 12)//Q
-        camera_roll(camera, -PI / 180 );
-    else if (keycode == 14)//E
-        camera_roll(camera, PI / 180);
-    else if (keycode == 0)//A
-        camera_yaw(camera, -PI / 180);
-    else if (keycode == 2)//D
-        camera_yaw(camera, PI / 180);
+        all->view_type = 1 - all->view_type;
+    else if (keycode == 12)
+        camera_roll(&(all->camera), PI / 180 );
+    else if (keycode == 14)
+        camera_roll(&(all->camera), -PI / 180);
+    else if (keycode == 0)
+        camera_yaw(&(all->camera), PI / 180);
+    else if (keycode == 2)
+        camera_yaw(&(all->camera), -PI / 180);
     else if (keycode == 38)
-        change_z(world->map.verts, world->map.rows, world->map.cols, 1.2);
+        change_z(all->map.lines, all->map.line_count, 1.2);
     else if (keycode == 40)
-        change_z(world->map.verts, world->map.rows, world->map.cols, 1 / 1.2f);
+        change_z(all->map.lines, all->map.line_count, 1 / 1.2f);
     else if (keycode == 7)
-        scale_all(world->map.verts, world->map.rows, world->map.cols, 1.2);
+        scale_all(all->map.lines, all->map.line_count, 1.2);
     else if (keycode == 8)
-        scale_all(world->map.verts, world->map.rows, world->map.cols, 1/1.2f);
-
-    render(world);
+        scale_all(all->map.lines, all->map.line_count, 1 / 1.2f);
+    render(all);
     return (0);
 }
 
-int         mouse_hook(int button, int x, int y, t_world *world)
+int         mouse_hook(int button, int x, int y, t_fdf *all)
 {
-    t_camera    *camera;
-    matrix4     *trans;
+    if (button == 5)
+        camera_move(&all->camera, 1);
+    else if (button == 4)
+        camera_move(&all->camera, 0);
 
-    camera = &world->camera;
-    if (button == 5)//W
-        camera_move(camera, 1);
-    else if (button == 4)//S
-        camera_move(camera, 0);
+    render(all);
+    return (0);
+}
 
-    render(world);
+int         fdf_init(t_fdf  *all, char *name)
+{
+    all->mlx = mlx_init();
+    if (!all->mlx)
+        return (1);
+    all->height = 900;
+    all->width = 1600;
+    all->window = mlx_new_window(all->mlx, all->width, all->height, name);
+    if (!all->window)
+        return (2);
+    all->image.image = mlx_new_image(all->mlx, all->width, all->height);
+    if (!all->image.image)
+        return (3);
+    all->image.pixels = (int *)mlx_get_data_addr(all->image.image, &all->image.bpp,
+                                          &all->image.size_line, &all->image.endian);
+    all->camera.eye = v3_create(0, 0, 10);
+    all->camera.gaze = v3_create(0, 0, -1);
+    all->camera.view_up = v3_create(0, 1, 0);
+    all->box.bottom = -10;
+    all->box.top = 10;
+    all->box.left = -10 * (float)all->width / (float)all->height;
+    all->box.right = 10 * (float)all->width / (float)all->height;
+    all->box.near = -5;
+    all->box.far = -1000;
+    all->view_type = ORTHOGONAL;
     return (0);
 }
 
 void        fdf(char    *file_name)
 {
-    t_world world;
+    t_fdf   all;
 
-    if (read_map(file_name, &world.map))
+    if (read_map(file_name, &all.map))
         ft_putendl("error: invalid map");
     else
     {
-        world.mlx = mlx_init();
-        world.height = 900;
-        world.width = 1600;
-        world.window = mlx_new_window(world.mlx, world.width, world.height, "FDF");
-        world.image = mlx_new_image(world.mlx, world.width, world.height);
-        world.pixels = (int *)mlx_get_data_addr(world.image, &world.bits_per_pixel, &world.size_line, &world.endian);
-        world.camera.eye = v3_create(0, 0, 10);
-        world.camera.gaze = v3_create(0, 0, -1);
-        vector3 oy = v3_create(0, 1, 0);
-        vector3 temp = v3_cross_product(world.camera.gaze, oy);
-        world.camera.view_up = v3_cross_product(temp, world.camera.gaze);
-        world.box.bottom = -10;
-        world.box.top = 10;
-        world.box.left = -10 * (float)world.width / (float)world.height;
-        world.box.right = 10 * (float)world.width / (float)world.height;
-        world.box.near = -5;
-        world.box.far = -1000;
-        render(&world);
-        mlx_mouse_hook(world.window, mouse_hook, &world);
-        mlx_key_hook(world.window, keys_hook, &world);
-        mlx_loop(world.mlx);
+        if (!fdf_init(&all, file_name))
+        {
+            render(&all);
+            mlx_mouse_hook(all.window, mouse_hook, &all);
+            mlx_key_hook(all.window, keys_hook, &all);
+            mlx_loop(all.mlx);
+        }
+        else
+            ft_putendl("error: initialization failed");
     }
 }
 

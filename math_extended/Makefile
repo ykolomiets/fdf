@@ -13,17 +13,12 @@
 NAME = libmathx.a
 SRC_FILES = vector2_part1.c \
             vector2_part2.c \
-            vector2_part3.c \
             vector3_part1.c \
             vector3_part2.c \
-            vector3_part3.c \
             hvector.c       \
             matrix3.c       \
             matrix4_part1.c \
-            matrix4_part2.c \
-            transforms_3d_part1.c   \
-            transforms_3d_part2.c   \
-            transforms_3d_part3.c   
+            matrix4_part2.c
 
 OBJDIR = ./obj/
 

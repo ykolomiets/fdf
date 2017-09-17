@@ -1,6 +1,5 @@
 #include "mathx.h"
 #include <math.h>
-#include <stdlib.h>
 
 void    m4_submat(matrix4 m, matrix3 sub, int i, int j)
 {
@@ -35,7 +34,7 @@ float   m4_det(matrix4 m)
     n = 0;
     i = 1;
     res = 0;
-    sub_matrix = m3_create_null();
+    m3_fill_null(sub_matrix);
     while (n < 4)
     {
         m4_submat(m, sub_matrix, 0, n);
@@ -44,7 +43,6 @@ float   m4_det(matrix4 m)
         n++;
         i *= -1;
     }
-    free(sub_matrix);
 
     return (res);
 }
@@ -62,7 +60,7 @@ int     m4_inverse(matrix4 m, matrix4 res)
         return (0);
 
     sign = 1;
-    mtemp = m3_create_null();
+    m3_fill_null(mtemp);
     i = 0;
     while (i < 4)
     {
@@ -76,15 +74,17 @@ int     m4_inverse(matrix4 m, matrix4 res)
         }
         i++;
     }
-    free(mtemp);
 
     return (1);
 }
 
-void    m4_mult_hv(matrix4 m, hvector v, hvector res)
+t_hvec  m4_mult_hv(matrix4 m, t_hvec *v)
 {
-    res[0] = m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3] * v[3];
-    res[1] = m[4] * v[0] + m[5] * v[1] + m[6] * v[2] + m[7] * v[3];
-    res[2] = m[8] * v[0] + m[9] * v[1] + m[10] * v[2] + m[11] * v[3];
-    res[3] = m[12] * v[0] + m[13] * v[1] + m[14] * v[2] + m[15] * v[3];
+    t_hvec res;
+
+    res.x = m[0] *  v->x + m[1] *   v->y + m[2] *   v->z + m[3] *   v->w;
+    res.y = m[4] *  v->x + m[5] *   v->y + m[6] *   v->z + m[7] *   v->w;
+    res.z = m[8] *  v->x + m[9] *   v->y + m[10] *  v->z + m[11] *  v->w;
+    res.w = m[12] * v->x + m[13] *  v->y + m[14] *  v->z + m[15] *  v->w;
+    return (res);
 }

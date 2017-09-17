@@ -1,56 +1,49 @@
 #include "mathx.h"
-#include <stdlib.h>
+#include <math.h>
 
-vector3 v3_create(float x, float y, float z)
+t_vec3 v3_create(float x, float y, float z)
 {
-    float *vec;
+    return (t_vec3){x, y, z};
+}
 
-    vec = (float *)malloc(3 * sizeof(float));
-    vec[0] = x;
-    vec[1] = y;
-    vec[2] = z;
+t_vec3 v3_add(t_vec3 a, t_vec3 b)
+{
+    t_vec3 vec;
+
+    vec.x = a.x + b.x;
+    vec.y = a.y + b.y;
+    vec.z = a.z + b.z;
 
     return (vec);
 }
 
-vector3 v3_add(vector3 a, vector3 b)
+t_vec3 v3_sub(t_vec3 a, t_vec3 b)
 {
-    float *vec;
+    t_vec3 vec;
 
-    vec = (float *)malloc(3 * sizeof(float));
-    vec[0] = a[0] + b[0];
-    vec[1] = a[1] + b[1];
-    vec[2] = a[2] + b[2];
+    vec.x = a.x - b.x;
+    vec.y = a.y - b.y;
+    vec.z = a.z - b.z;
 
     return (vec);
 }
 
-vector3 v3_sub(vector3 a, vector3 b)
+int     v3_mult_by_scalar(t_vec3 *a, float c)
 {
-    float  *vec;
-
-    vec = (float *)malloc(3 * sizeof(float));
-    vec[0] = a[0] - b[0];
-    vec[1] = a[1] - b[1];
-    vec[2] = a[2] - b[2];
-
-    return (vec);
-}
-
-int     v3_add_with_res(vector3 a, vector3 b, vector3 res)
-{
-    res[0] = a[0] + b[0];
-    res[1] = a[1] + b[1];
-    res[2] = a[2] + b[2];
+    a->x *= c;
+    a->y *= c;
 
     return (0);
 }
 
-int     v3_sub_with_res(vector3 a, vector3 b, vector3 res)
+int     v3_div_by_scalar(t_vec3 *a, float c)
 {
-    res[0] = a[0] - b[0];
-    res[1] = a[1] - b[1];
-    res[2] = a[2] - b[2];
-
-    return (0);
+    if (fabsf(c) < 0.00005)
+        return (1);
+    else
+    {
+        a->x /= c;
+        a->y /= c;
+        return (0);
+    }
 }

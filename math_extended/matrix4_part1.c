@@ -1,45 +1,66 @@
 #include "mathx.h"
-#include <stdlib.h>
 
-matrix4     m4_create_null()
+void            m4_fill_null(matrix4 m)
 {
-    matrix4 res;
-
-    res = (matrix4)malloc(16 * sizeof(float));
-    for (int i = 0; i < 16; i++)
-    {
-        res[i] = 0;
-    }
-
-    return res;
+    m[0] = 0;
+    m[1] = 0;
+    m[2] = 0;
+    m[3] = 0;
+    m[4] = 0;
+    m[5] = 0;
+    m[6] = 0;
+    m[7] = 0;
+    m[8] = 0;
+    m[9] = 0;
+    m[10] = 0;
+    m[11] = 0;
+    m[12] = 0;
+    m[13] = 0;
+    m[14] = 0;
+    m[15] = 0;
 }
 
-matrix4     m4_create_identity()
+void            m4_identity(matrix4 m)
 {
-    matrix4 res;
-
-    res = m4_create_null();
-    res[0] = 1;
-    res[5] = 1;
-    res[10] = 1;
-    res[15] = 1;
-
-    return res;
+    m[0] = 1;
+    m[1] = 0;
+    m[2] = 0;
+    m[3] = 0;
+    m[4] = 0;
+    m[5] = 1;
+    m[6] = 0;
+    m[7] = 0;
+    m[8] = 0;
+    m[9] = 0;
+    m[10] = 1;
+    m[11] = 0;
+    m[12] = 0;
+    m[13] = 0;
+    m[14] = 0;
+    m[15] = 1;
 }
 
 void        m4_add(matrix4 a, matrix4 b, matrix4 res)
 {
-    for (int i = 0; i < 16; i++)
+    unsigned char   i;
+
+    i = 0;
+    while (i < 16)
     {
         res[i] = a[i] + b[i];
+        i++;
     }
 }
 
 void        m4_sub(matrix4 a, matrix4 b, matrix4 res)
 {
-    for (int i = 0; i < 16; i++)
+    unsigned char   i;
+
+    i = 0;
+    while (i < 16)
     {
         res[i] = a[i] - b[i];
+        i++;
     }
 }
 

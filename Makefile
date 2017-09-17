@@ -17,13 +17,17 @@ SRCDIR = ./srcs/
 OBJDIR = ./obj/
 
 SRC_FILES = 	main.c							\
-				fdf.c					\
-				base_structures.c			\
-				read_map.c				\
+				fdf.c					        \
+				read_map_part1.c                \
+				read_map_part2.c                \
+				base_structures.c			    \
 				viewing_transformations.c		\
-				rasterization.c				\
+				rasterization.c				    \
 				camera_transformations.c		\
-				world_transformations.c
+				world_transformations.c			\
+				matrix_transformations_part1.c	\
+				matrix_transformations_part2.c	\
+				matrix_transformations_part3.c		
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

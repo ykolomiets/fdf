@@ -76,6 +76,7 @@ SRC_FILES =	ft_memset.c		    \
 		ft_count_word.c         \
 		ft_table_size.c         \
 		ft_malloc_2d_array.c    \
+		ft_free_2d_array.c      \
 		get_next_line.c	        \
 		read.c	
 
