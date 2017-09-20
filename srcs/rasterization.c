@@ -1,11 +1,40 @@
 #include "rasterization.h"
-#include <stdio.h>
+
+t_rgb   color_mode2(t_vertex *p1, t_vertex *p2, float t, t_map *map)
+{
+    t_rgb   res;
+    float   z;
+    t_hsv   hsv;
+
+    z = p1->real_z + t * (p2->real_z - p1->real_z);
+    hsv.s = 1;
+    hsv.v = 1;
+    hsv.h = 120 - ((z - map->min_z) / (map->max_z - map->min_z)) * 120;
+    res = hsv_to_rgb(hsv);
+    return (res);
+}
+
+t_rgb   color_mode3(t_vertex *p1, t_vertex *p2, float t, t_map *map)
+{
+    t_rgb   res;
+    float   z;
+    t_hsv   hsv;
+
+    z = p1->real_z + t * (p2->real_z - p1->real_z);
+    hsv.s = 1;
+    hsv.v = 1;
+    if (z > 0)
+        hsv.h = 120 - ((map->max_z - z) / map->max_z) * 120;
+    else
+        hsv.h = 120 + ((map->min_z - z) / map->min_z) * 120;
+    res = hsv_to_rgb(hsv);
+    return (res);
+}
+
 
 int     color_by_mode(t_vertex *p1, t_vertex *p2, float t, t_fdf *all)
 {
     t_rgb   res;
-    t_hsv   hsv;
-    float   z;
 
     if (all->cmode == 0)
         return (0x0fffff);
@@ -16,11 +45,12 @@ int     color_by_mode(t_vertex *p1, t_vertex *p2, float t, t_fdf *all)
     }
     else if (all->cmode == 2)
     {
-        z = p1->real_z + t * (p2->real_z - p1->real_z);
-        hsv.s = 1;
-        hsv.v = 1;
-        hsv.h = 120 - (z - all->map.min_z) / (all->map.max_z - all->map.min_z) * 120;
-        res = hsv_to_rgb(hsv);
+        res = color_mode2(p1, p2, t, &all->map);
+        return (rgb_to_int(&res));
+    }
+    else if (all->cmode == 3)
+    {
+        res = color_mode3(p1, p2, t, &all->map);
         return (rgb_to_int(&res));
     }
     return 0xffffff;

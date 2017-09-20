@@ -12,18 +12,24 @@
 
 NAME = fdf
 
-SRCDIR = ./srcs/
+SRC_DIR =        ./srcs/
+OBJ_DIR =        ./obj/
+LIBFT_DIR =      ./libft
+LIBMATHX_DIR =   ./math_extended
+LIBMLX_DIR =     ./minilibx_macos
 
-OBJDIR = ./obj/
+LIBFT =         libft.a
+LIBMATHX =      libmathx.a
+LIBMLX =        libmlx.a
 
-SRC_FILES = 	main.c							\
-				fdf.c					        \
+SRC_FILES = 			main.c				\
+				fdf.c			        \
 				read_map_part1.c                \
 				read_map_part2.c                \
-				viewing_transformations.c		\
-				rasterization.c				    \
-				camera_transformations.c		\
-				world_transformations.c			\
+				viewing_transformations.c	\
+				rasterization.c			\
+				camera_transformations.c	\
+				world_transformations.c		\
 				matrix_transformations_part1.c	\
 				matrix_transformations_part2.c	\
 				matrix_transformations_part3.c	\
@@ -38,39 +44,32 @@ SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
 
 OBJ = $(addprefix $(OBJDIR), $(OBJ_FILES))
 
-INC = -I ./includes -I $(LIBFTFOLDER) -I $(LMLXFOLDER) -I $(LIBMATHXFOLDER)
+INC = -I ./includes -I $(LIBFT_DIR) -I $(LIBMLX_DIR) -I $(LIBMATHX_DIR)
 
-LIB = libft.a
+LIBFLAGS = -lft -L $(LIBFT_DIR) -lmlx -L $(LIBMLX_DIR) -L $(LIBMATHX_DIR) -lmathx -lm
 
-LIBFLAGS = -lft -L $(LIBFTFOLDER) -lmlx -L $(LMLXFOLDER) -lm -L $(LIBMATHXFOLDER) -lmathx
-
-LIBFTFOLDER = ./libft/
-
-LIBMATHXFOLDER = ./math_extended/
-
-
-LMLXFOLDER = ./minilibx_macos
-#LMLXFOLDER = ./minilibx
-
-#FRAMEWORKS = -lXext -lX11
 FRAMEWORKS = -framework OpenGL -framework AppKit
 
-#RETURN FLAGS PLEASE
-#FLAGS = -Werror -Wextra -Wall
-FLAGS = -Werror
+FLAGS = -Werror -Wextra -Wall
 
 CC = clang
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFTFOLDER)$(LIB)
-	$(CC) $(FLAGS) $(FRAMEWORKS) $(OBJ) $(LIBFLAGS) -o $(NAME)
+$(NAME):    $(LIBFT_DIR)/$(LIBFT) $(LIBMATHX_DIR)/$(LIBMATHX) $(LIBMLX_DIR)/$(LIBMLX) $(OBJ)
+	     $(CC) $(OBJ) $(FLAGS) $(FRAMEWORKS) $(LIBFLAGS) -o $(NAME)
 
-$(OBJDIR)%.o : $(SRCDIR)%.c
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	$(CC) $(FLAGS) $(INC) -c $< -o $@  
 
-$(LIBFTFOLDER)$(LIB):
-	make -C $(LIBFTFOLDER)
+$(LIBFT_DIR)/$(LIBFT):
+	make -s -C $(LIBFT_DIR)/
+
+$(LIBMATHX_DIR)/$(LIBMATHX):
+	make -s -C $(LIBMATHX_DIR)/
+	
+$(LIBMLX_DIR)/$(LIBMLX):
+	make -s -C $(LIBMLX_DIR)/
 	
 clean:
 	rm -rf $(OBJ)

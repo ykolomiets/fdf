@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdio.h>
 
 t_vertex        **malloc_map(int fd, char ***splited, int *rows, int *cols)
 {
@@ -111,7 +112,9 @@ int       read_map(char *map_file, t_map *map)
         vertices = malloc_map(fd, &splited, &rows, &cols);
         if (!vertices || fill_map(vertices, splited, rows, cols))
             return (1);
+        printf("ROWS: %d, COLUMNS: %d\n", rows, cols);
         map->lines = form_lines(vertices, &map->line_count, rows, cols);
+        printf("LINE_COUNT: %d", map->line_count);
         find_max_min_z(vertices, rows, cols, map);
         ft_free_2d_array((void ***)&vertices, rows);
         ft_free_table(&splited, rows);

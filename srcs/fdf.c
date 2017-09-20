@@ -78,8 +78,8 @@ int         fdf_init(t_fdf  *all, char *name)
     all->mlx = mlx_init();
     if (!all->mlx)
         return (1);
-    all->height = 400;
-    all->width = 400;
+    all->height = 900;
+    all->width = 1600;
     all->window = mlx_new_window(all->mlx, all->width, all->height, name);
     if (!all->window)
         return (2);
@@ -91,10 +91,10 @@ int         fdf_init(t_fdf  *all, char *name)
     all->camera.eye = v3_create(0, 0, 10);
     all->camera.gaze = v3_create(0, 0, -1);
     all->camera.view_up = v3_create(0, 1, 0);
-    all->box.bottom = -10;
-    all->box.top = 10;
-    all->box.left = -10 * (float)all->width / (float)all->height;
-    all->box.right = 10 * (float)all->width / (float)all->height;
+    all->box.bottom = -100;
+    all->box.top = 100;
+    all->box.left = -100 * (float)all->width / (float)all->height;
+    all->box.right = 100 * (float)all->width / (float)all->height;
     all->box.near = -1;
     all->box.far = -1000;
     all->view_type = ORTHOGONAL;
