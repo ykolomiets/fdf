@@ -40,9 +40,9 @@ SRC_FILES = 			main.c				\
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
-SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
+SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-OBJ = $(addprefix $(OBJDIR), $(OBJ_FILES))
+OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 INC = -I ./includes -I $(LIBFT_DIR) -I $(LIBMLX_DIR) -I $(LIBMATHX_DIR)
 
@@ -56,7 +56,7 @@ CC = clang
 
 all: $(NAME)
 
-$(NAME):    $(LIBFT_DIR)/$(LIBFT) $(LIBMATHX_DIR)/$(LIBMATHX) $(LIBMLX_DIR)/$(LIBMLX) $(OBJ)
+$(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT) $(LIBMATHX_DIR)/$(LIBMATHX) $(LIBMLX_DIR)/$(LIBMLX)
 	     $(CC) $(OBJ) $(FLAGS) $(FRAMEWORKS) $(LIBFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
