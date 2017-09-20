@@ -1,4 +1,5 @@
 #include "viewing_tranformations.h"
+#include <stdio.h>
 
 void    create_vp_transfrom(int width, int height, matrix4 mvp)
 {
@@ -58,6 +59,19 @@ void     create_perspective_transform(t_box *box, matrix4 mper)
     mper[10] = (box->far + box->near) / (box->near - box->far);
     mper[11] = 2 * box->far * box->near / (box->far - box->near);
     mper[14] = 1;
+}
+
+void    create_vp_proj_tranform(t_fdf *all, matrix4 res)
+{
+    matrix4 mvp;
+    matrix4 m_orth_per;
+
+    create_vp_transfrom(all->width, all->height, mvp);
+    if (all->view_type == ORTHOGONAL)
+        create_orth_transform(&all->box, m_orth_per);
+    else
+        create_perspective_transform(&all->box, m_orth_per);
+    m4_mult(mvp, m_orth_per, res);
 }
 
 void        combine_all_transforms(t_fdf *all, matrix4 mres)

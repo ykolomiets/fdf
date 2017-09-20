@@ -1,66 +1,42 @@
 #include "fdf.h"
 #include "libft.h"
 #include "read_map.h"
-#include "viewing_tranformations.h"
-#include "rasterization.h"
+#include "render.h"
 #include "camera_transformations.h"
 #include "world_transformations.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "libft.h"
 
-void        clean_image(t_fdf *all)
+void        keys_hook2(int keycode, t_fdf *all)
 {
-    int total;
-    int *pixels;
+    float   temp;
 
-    total = all->width * all->height;
-    pixels = all->image.pixels;
-    while (total--)
-        pixels[total] = 0;
-}
-
-void        print_line(t_line *line)
-{
-    printf("\nline:\n{\n"
-                   "\tp1: <%f, %f, %f, %f>\n"
-                   "\tp2: <%f, %f, %f, %f>\n"
-                   "}",
-           line->p1.position.x,
-           line->p1.position.y,
-           line->p1.position.z,
-           line->p1.position.w,
-           line->p2.position.x,
-           line->p2.position.y,
-           line->p2.position.z,
-           line->p2.position.w
-    );
-}
-
-void        render(t_fdf  *all)
-{
-    matrix4 mres;
-    t_line  *transformed;
-    int     i;
-
-    combine_all_transforms(all, mres);
-    i = 0;
-    transformed = malloc(sizeof(t_line) * all->map.line_count);
-    clean_image(all);
-    while (i < all->map.line_count)
+    if (keycode == 38)
+        change_z(all->map.lines, all->map.line_count, 1.2);
+    else if (keycode == 40)
+        change_z(all->map.lines, all->map.line_count, 1 / 1.2f);
+    else if (keycode == 7)
+        scale_all(all->map.lines, all->map.line_count, 1.2);
+    else if (keycode == 8)
+        scale_all(all->map.lines, all->map.line_count, 1 / 1.2f);
+    else if (keycode == 32)
     {
-        transformed[i].p1.position = m4_mult_hv(mres, &all->map.lines[i].p1.position);
-        transformed[i].p2.position = m4_mult_hv(mres, &all->map.lines[i].p2.position);
-        transformed[i].p1.position = hv_normalize(transformed[i].p1.position);
-        transformed[i].p2.position = hv_normalize(transformed[i].p2.position);
-        //print_line(&transformed[i]);
-        draw_line_dda(&transformed[i++], all);
+        temp = all->box.near + 1;
+        if (temp < -0.0005f)
+            all->box.near = temp;
     }
-    mlx_put_image_to_window(all->mlx, all->window, all->image.image, 0, 0);
+    else if (keycode == 34)
+    {
+        temp = all->box.near - 1;
+        if (temp > all->box.far)
+            all->box.near = temp;
+    }
 }
 
 int         keys_hook(int keycode, t_fdf *all)
 {
+    printf("keycode: %d\n", keycode);
     if (keycode == 53)
         exit(0);
     else if (keycode == 13)
@@ -77,14 +53,9 @@ int         keys_hook(int keycode, t_fdf *all)
         camera_yaw(&(all->camera), PI / 180);
     else if (keycode == 2)
         camera_yaw(&(all->camera), -PI / 180);
-    else if (keycode == 38)
-        change_z(all->map.lines, all->map.line_count, 1.2);
-    else if (keycode == 40)
-        change_z(all->map.lines, all->map.line_count, 1 / 1.2f);
-    else if (keycode == 7)
-        scale_all(all->map.lines, all->map.line_count, 1.2);
-    else if (keycode == 8)
-        scale_all(all->map.lines, all->map.line_count, 1 / 1.2f);
+    else
+        keys_hook2(keycode, all);
+
     render(all);
     return (0);
 }
@@ -105,8 +76,8 @@ int         fdf_init(t_fdf  *all, char *name)
     all->mlx = mlx_init();
     if (!all->mlx)
         return (1);
-    all->height = 900;
-    all->width = 1600;
+    all->height = 400;
+    all->width = 400;
     all->window = mlx_new_window(all->mlx, all->width, all->height, name);
     if (!all->window)
         return (2);
@@ -122,9 +93,10 @@ int         fdf_init(t_fdf  *all, char *name)
     all->box.top = 10;
     all->box.left = -10 * (float)all->width / (float)all->height;
     all->box.right = 10 * (float)all->width / (float)all->height;
-    all->box.near = -5;
+    all->box.near = -1;
     all->box.far = -1000;
     all->view_type = ORTHOGONAL;
+    all->cmode = 0;
     return (0);
 }
 

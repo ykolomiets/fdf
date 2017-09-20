@@ -42,14 +42,6 @@ void    camera_yaw(t_camera *camera, float angle)
     camera->gaze = v3_normalize(camera->gaze);
 }
 
-void    print_m3(matrix3 m)
-{
-    printf("%f\t %f\t %f\n"
-            "%f\t %f\t %f\n"
-                   "%f\t %f\t %f\n",
-    m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8]);
-}
-
 void    camera_pitch(t_camera *camera, float angle)
 {
     matrix3 trans;

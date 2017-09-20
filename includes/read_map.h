@@ -5,5 +5,7 @@
 
 int     read_map(char *map_file, t_map *map);
 t_line  *form_lines(t_vertex **verts, int *lines_count, int rows, int cols);
+void    find_max_min_z(t_vertex **verts, int rows, int cols, t_map *map);
+
 
 #endif

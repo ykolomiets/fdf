@@ -15,6 +15,7 @@
 
 #include "mathx.h"
 #include "mlx.h"
+#include "rgb.h"
 
 #define ORTHOGONAL 0
 #define PERSPECTIVE 1
@@ -22,7 +23,8 @@
 typedef struct      s_vertex
 {
     t_hvec          position;
-    int             color;
+    float           real_z;
+    t_rgb           color;
 }                   t_vertex;
 
 typedef struct      s_line
@@ -35,6 +37,8 @@ typedef struct      s_map
 {
     t_line          *lines;
     int             line_count;
+    float           min_z;
+    float           max_z;
 }                   t_map;
 
 typedef struct      s_camera
@@ -74,6 +78,7 @@ typedef struct      s_fdf
     t_camera        camera;
     t_box           box;
     int             view_type;
+    int             cmode;
 }                   t_fdf;
 
 #endif

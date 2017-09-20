@@ -1,23 +1,5 @@
 #include "read_map.h"
 #include <stdlib.h>
-#include <stdio.h>
-
-void        print_line1(t_line *line)
-{
-    printf("\nline:\n{\n"
-                   "\tp1: <%f, %f, %f, %f>\n"
-                   "\tp2: <%f, %f, %f, %f>\n"
-                   "}",
-           line->p1.position.x,
-           line->p1.position.y,
-           line->p1.position.z,
-           line->p1.position.w,
-           line->p2.position.x,
-           line->p2.position.y,
-           line->p2.position.z,
-           line->p2.position.w
-    );
-}
 
 int    lines_from_verts(t_line **lines, t_vertex **verts, int rows, int cols)
 {
@@ -68,4 +50,27 @@ t_line  *form_lines(t_vertex **verts, int *lines_count, int rows, int cols)
         *lines_count = lines_from_verts(&lines, verts, rows, cols);
     }
     return (lines);
+}
+
+void    find_max_min_z(t_vertex **verts, int rows, int cols, t_map *map)
+{
+    int     i;
+    int     j;
+
+    i = 0;
+    map->min_z = verts[0][0].real_z;
+    map->max_z = verts[0][0].real_z;
+    while (i < rows)
+    {
+        j = 0;
+        while (j < cols)
+        {
+            if (verts[i][j].real_z > map->max_z)
+                map->max_z = verts[i][j].real_z;
+            if (verts[i][j].real_z < map->min_z)
+                map->max_z = verts[i][j].real_z;
+            j++;
+        }
+        i++;
+    }
 }
