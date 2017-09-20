@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdio.h>
 
 t_vertex        **malloc_map(int fd, char ***splited, int *rows, int *cols)
 {
@@ -110,7 +109,6 @@ int       read_map(char *map_file, t_map *map)
     if (fd != -1)
     {
         vertices = malloc_map(fd, &splited, &rows, &cols);
-        printf("HERE: %d, %d\n", rows, cols);
         if (!vertices || fill_map(vertices, splited, rows, cols))
             return (1);
         map->lines = form_lines(vertices, &map->line_count, rows, cols);

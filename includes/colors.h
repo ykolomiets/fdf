@@ -1,5 +1,5 @@
-#ifndef RGB_H
-#define RGB_H
+#ifndef COLORS_H
+#define COLORS_H
 
 typedef struct  s_rgb
 {
@@ -19,5 +19,7 @@ t_rgb   rgb_from_int(int c1);
 int     rgb_to_int(t_rgb *c);
 t_rgb   rgb_add(t_rgb c1, t_rgb c2);
 t_rgb   rgb_add_a(t_rgb c1, t_rgb c2, float a);
+t_hsv   rgb_to_hsv(t_rgb rgb);
+t_rgb   hsv_to_rgb(t_hsv hsv);
 
 #endif

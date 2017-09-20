@@ -20,14 +20,17 @@ SRC_FILES = 	main.c							\
 				fdf.c					        \
 				read_map_part1.c                \
 				read_map_part2.c                \
-				base_structures.c			    \
 				viewing_transformations.c		\
 				rasterization.c				    \
 				camera_transformations.c		\
 				world_transformations.c			\
 				matrix_transformations_part1.c	\
 				matrix_transformations_part2.c	\
-				matrix_transformations_part3.c		
+				matrix_transformations_part3.c	\
+				clipping.c                      \
+				render.c                        \
+				rgb.c                           \
+				hsv.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

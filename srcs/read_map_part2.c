@@ -68,7 +68,7 @@ void    find_max_min_z(t_vertex **verts, int rows, int cols, t_map *map)
             if (verts[i][j].real_z > map->max_z)
                 map->max_z = verts[i][j].real_z;
             if (verts[i][j].real_z < map->min_z)
-                map->max_z = verts[i][j].real_z;
+                map->min_z = verts[i][j].real_z;
             j++;
         }
         i++;

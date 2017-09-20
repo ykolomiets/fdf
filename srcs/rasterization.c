@@ -4,9 +4,11 @@
 int     color_by_mode(t_vertex *p1, t_vertex *p2, float t, t_fdf *all)
 {
     t_rgb   res;
+    t_hsv   hsv;
+    float   z;
 
     if (all->cmode == 0)
-        return (0xffffff);
+        return (0x0fffff);
     else if (all->cmode == 1)
     {
         res = rgb_add_a(p1->color, p2->color, t);
@@ -14,7 +16,12 @@ int     color_by_mode(t_vertex *p1, t_vertex *p2, float t, t_fdf *all)
     }
     else if (all->cmode == 2)
     {
-        return (0xfffff);
+        z = p1->real_z + t * (p2->real_z - p1->real_z);
+        hsv.s = 1;
+        hsv.v = 1;
+        hsv.h = 120 - (z - all->map.min_z) / (all->map.max_z - all->map.min_z) * 120;
+        res = hsv_to_rgb(hsv);
+        return (rgb_to_int(&res));
     }
     return 0xffffff;
 }

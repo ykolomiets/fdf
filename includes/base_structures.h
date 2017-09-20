@@ -15,7 +15,7 @@
 
 #include "mathx.h"
 #include "mlx.h"
-#include "rgb.h"
+#include "colors.h"
 
 #define ORTHOGONAL 0
 #define PERSPECTIVE 1

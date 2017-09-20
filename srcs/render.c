@@ -2,7 +2,6 @@
 #include "clipping.h"
 #include "rasterization.h"
 #include "viewing_tranformations.h"
-#include <stdio.h>
 
 void        clean_image(t_fdf *all)
 {

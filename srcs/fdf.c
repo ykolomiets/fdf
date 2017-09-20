@@ -45,6 +45,8 @@ int         keys_hook(int keycode, t_fdf *all)
         camera_pitch(&(all->camera), PI / 180);
     else if (keycode == 18)
         all->view_type = 1 - all->view_type;
+    else if (keycode == 19)
+        all->cmode = (all->cmode + 1) % 3;
     else if (keycode == 12)
         camera_roll(&(all->camera), PI / 180 );
     else if (keycode == 14)

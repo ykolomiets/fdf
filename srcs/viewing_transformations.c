@@ -1,5 +1,4 @@
 #include "viewing_tranformations.h"
-#include <stdio.h>
 
 void    create_vp_transfrom(int width, int height, matrix4 mvp)
 {
