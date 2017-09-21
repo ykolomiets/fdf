@@ -64,6 +64,8 @@ int         keys_hook(int keycode, t_fdf *all)
 
 int         mouse_hook(int button, int x, int y, t_fdf *all)
 {
+    x = 0;
+    y = 0;
     if (button == 5)
         camera_move(&all->camera, 1);
     else if (button == 4)
@@ -78,8 +80,8 @@ int         fdf_init(t_fdf  *all, char *name)
     all->mlx = mlx_init();
     if (!all->mlx)
         return (1);
-    all->height = 900;
-    all->width = 1600;
+    all->height = 500;
+    all->width = 700;
     all->window = mlx_new_window(all->mlx, all->width, all->height, name);
     if (!all->window)
         return (2);

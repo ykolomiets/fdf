@@ -71,11 +71,11 @@ void    draw_line_dda(t_line *line, t_fdf *all)
     steps = ABS(deltas[0]) > ABS(deltas[1]) ? ABS(deltas[0]) : ABS(deltas[1]);
     incs[0] = deltas[0] / (float) steps;
     incs[1] = deltas[1] / (float) steps;
+    k = 0;
     if ( (ROUND(xy[1]) >= 0 && ROUND(xy[1]) < all->height) &&
             (ROUND(xy[0]) >= 0 && ROUND(xy[0]) < all->width))
         all->image.pixels[ROUND(xy[1]) * all->width + ROUND(xy[0])] =
-                color_by_mode(&line->p1, &line->p2, (k - 1) / (float)steps, all);
-    k = 0;
+                color_by_mode(&line->p1, &line->p2, k / (float)steps, all);
     while (k++ < steps)
     {
         xy[0] += incs[0];
@@ -83,6 +83,6 @@ void    draw_line_dda(t_line *line, t_fdf *all)
         if ( (ROUND(xy[1]) >= 0 && ROUND(xy[1]) < all->height) &&
              (ROUND(xy[0]) >= 0 && ROUND(xy[0]) < all->width))
             all->image.pixels[ROUND(xy[1]) * all->width + ROUND(xy[0])] =
-                    color_by_mode(&line->p1, &line->p2, (k - 1) / (float)steps, all);
+                    color_by_mode(&line->p1, &line->p2, k / (float)steps, all);
     }
 }
