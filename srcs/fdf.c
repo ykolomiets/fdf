@@ -36,17 +36,25 @@ void        keys_hook2(int keycode, t_fdf *all)
 
 int         keys_hook(int keycode, t_fdf *all)
 {
-    printf("keycode: %d\n", keycode);
+    if (keycode == 53)
+        exit(0);
+    else if (keycode == 18)
+        all->view_type = 1 - all->view_type;
+    else if (keycode == 19)
+        all->cmode = (all->cmode + 1) % 3;
+
+    render(all);
+    return (0);
+}
+
+int         pressed_hook(int keycode, t_fdf *all)
+{
     if (keycode == 53)
         exit(0);
     else if (keycode == 13)
         camera_pitch(&(all->camera), -PI / 180);
     else if (keycode == 1)
         camera_pitch(&(all->camera), PI / 180);
-    else if (keycode == 18)
-        all->view_type = 1 - all->view_type;
-    else if (keycode == 19)
-        all->cmode = (all->cmode + 1) % 3;
     else if (keycode == 12)
         camera_roll(&(all->camera), PI / 180 );
     else if (keycode == 14)
@@ -57,7 +65,6 @@ int         keys_hook(int keycode, t_fdf *all)
         camera_yaw(&(all->camera), -PI / 180);
     else
         keys_hook2(keycode, all);
-
     render(all);
     return (0);
 }
@@ -117,6 +124,7 @@ void        fdf(char    *file_name)
             render(&all);
             mlx_mouse_hook(all.window, mouse_hook, &all);
             mlx_key_hook(all.window, keys_hook, &all);
+            mlx_hook(all.window, 2, 0, pressed_hook, &all);
             mlx_loop(all.mlx);
         }
         else

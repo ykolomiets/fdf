@@ -52,12 +52,14 @@ FRAMEWORKS = -framework OpenGL -framework AppKit
 
 FLAGS = -Werror -Wextra -Wall
 
-CC = clang
+OPT = -O3
+
+CC = gcc
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT) $(LIBMATHX_DIR)/$(LIBMATHX) $(LIBMLX_DIR)/$(LIBMLX)
-	     $(CC) $(OBJ) $(FLAGS) $(FRAMEWORKS) $(LIBFLAGS) -o $(NAME)
+	     $(CC) $(OBJ) $(FLAGS) $(OPT) $(FRAMEWORKS) $(LIBFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	$(CC) $(FLAGS) $(INC) -c $< -o $@  

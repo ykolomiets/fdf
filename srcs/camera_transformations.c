@@ -14,10 +14,7 @@ void    camera_move(t_camera *camera, int forward)
             camera->eye = new_eye;
     }
     else
-    {
-        if (v3_magnitude(&camera->eye) < 1000)
-            camera->eye = v3_sub(camera->eye, camera->gaze);
-    }
+        camera->eye = v3_sub(camera->eye, camera->gaze);
 }
 
 void    camera_roll(t_camera *camera, float angle)
