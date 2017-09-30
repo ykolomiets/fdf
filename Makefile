@@ -6,7 +6,7 @@
 #    By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/14 16:54:48 by ykolomie          #+#    #+#              #
-#    Updated: 2017/04/20 15:27:53 by ykolomie         ###   ########.fr        #
+#    Updated: 2017/09/30 12:32:28 by ykolomie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRC_FILES = 			main.c				\
 				clipping.c                      \
 				render.c                        \
 				rgb.c                           \
-				hsv.c
+				hsv.c							\
+				hooks.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
@@ -64,6 +65,11 @@ $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT) $(LIBMATHX_DIR)/$(LIBMATHX) $(LIBMLX_DIR)/
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	$(CC) $(FLAGS) $(INC) -c $< -o $@  
 
+$(OBJ): | $(OBJ_DIR)
+
+$(OBJ_DIR):
+	mkdir $(OBJ_DIR)
+
 $(LIBFT_DIR)/$(LIBFT):
 	make -s -C $(LIBFT_DIR)/
 
@@ -73,16 +79,20 @@ $(LIBMATHX_DIR)/$(LIBMATHX):
 $(LIBMLX_DIR)/$(LIBMLX):
 	make -s -C $(LIBMLX_DIR)/
 	
-clean:
+clean: libclean
 	rm -rf $(OBJ)
 
-fclean: clean
+fclean: clean libfclean
 	rm -rf $(NAME)
 
 libclean:
-	make clean -C $(LIBFTFOLDER)
+	make clean -C $(LIBFT_DIR)/
+	make clean -C $(LIBMATHX_DIR)/
+	make clean -C $(LIBMLX_DIR)/
 
 libfclean:
-	make fclean -C $(LIBFTFOLDER)
+	make fclean -C $(LIBFT_DIR)/
+	make fclean -C $(LIBMATHX_DIR)/
+	make clean -C $(LIBMLX_DIR)/
 
 re: fclean libfclean all

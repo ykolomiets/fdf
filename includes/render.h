@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/30 11:09:15 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 11:09:32 by ykolomie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RENDER_H
-#define RENDER_H
+# define RENDER_H
 
-#include "base_structures.h"
+# include "base_structures.h"
 
-void        render(t_fdf  *all);
+void	render(t_fdf *all);
 
-#endif //RENDER_H
+#endif
