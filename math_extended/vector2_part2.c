@@ -1,46 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector2_part2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/30 10:15:32 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 10:15:33 by ykolomie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mathx.h"
 #include <math.h>
 
-int         v2_mult_by_scalar(t_vec2 *a, float c)
+int		v2_mult_by_scalar(t_vec2 *a, float c)
 {
-    a->x *= c;
-    a->y *= c;
-
-    return (0);
+	a->x *= c;
+	a->y *= c;
+	return (0);
 }
 
-int         v2_div_by_scalar(t_vec2 *a, float c)
+int		v2_div_by_scalar(t_vec2 *a, float c)
 {
-    if (fabsf(c) < 0.00005)
-        return (1);
-    a->x *= c;
-    a->y *= c;
-    return (0);
+	if (fabsf(c) < 0.00005)
+		return (1);
+	a->x *= c;
+	a->y *= c;
+	return (0);
 }
 
-float   v2_dot_product(t_vec2 *a, t_vec2 *b)
+float	v2_dot_product(t_vec2 *a, t_vec2 *b)
 {
-    float   res;
+	float	res;
 
-    res = a->x * b->x + a->y * b->y;
-
-    return (res);
+	res = a->x * b->x + a->y * b->y;
+	return (res);
 }
 
-float   v2_magnitude(t_vec2 *a)
+float	v2_magnitude(t_vec2 *a)
 {
-    return sqrtf(a->x * a->x + a->y * a->y);
+	return (sqrtf(a->x * a->x + a->y * a->y));
 }
 
-t_vec2         v2_normalize(t_vec2 a)
+t_vec2	v2_normalize(t_vec2 a)
 {
-    float   magnitude;
+	float	magnitude;
 
-    magnitude = v2_magnitude(&a);
-    if (fabsf(magnitude) > 0.00005)
-    {
-        a.x /= magnitude;
-        a.y /= magnitude;
-    }
-    return (a);
+	magnitude = v2_magnitude(&a);
+	if (fabsf(magnitude) > 0.00005)
+	{
+		a.x /= magnitude;
+		a.y /= magnitude;
+	}
+	return (a);
 }
