@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 11:24:46 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:24:48 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 12:50:06 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 #include "libft.h"
 #include "read_map.h"
 #include "render.h"
-#include "camera_transformations.h"
-#include "world_transformations.h"
 #include "hooks.h"
-#include "libft.h"
 
 int		fdf_init(t_fdf *all, char *name)
 {
@@ -62,6 +59,7 @@ void	fdf(char *file_name)
 			mlx_mouse_hook(all.window, mouse_hook, &all);
 			mlx_key_hook(all.window, keys_hook, &all);
 			mlx_hook(all.window, 2, 0, pressed_hook, &all);
+			mlx_expose_hook(all.window, expose_hook, &all);
 			mlx_loop(all.mlx);
 		}
 		else

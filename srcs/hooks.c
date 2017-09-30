@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 11:22:24 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 12:20:04 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 12:47:32 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ int		mouse_hook(int button, int x, int y, t_fdf *all)
 		camera_move(&all->camera, 1);
 	else if (button == 4)
 		camera_move(&all->camera, 0);
+	render(all);
+	return (0);
+}
+
+int		expose_hook(t_fdf *all)
+{
 	render(all);
 	return (0);
 }
