@@ -6,40 +6,40 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 12:09:39 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 12:17:00 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 15:47:30 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "read_map.h"
 #include <stdlib.h>
 
-void	lines_from_verts(t_line *lines, t_vertex **verts, int rows, int cols)
+static void	lines_from_verts(t_line *lines, t_vertex **verts, int r, int c)
 {
 	int i;
 	int k;
 
 	k = -1;
 	if (lines)
-		while (rows--)
+		while (r--)
 		{
 			i = -1;
-			while (++i < cols)
+			while (++i < c)
 			{
-				if (rows)
+				if (r)
 				{
-					lines[++k].p1 = verts[rows][i];
-					lines[k].p2 = verts[rows - 1][i];
+					lines[++k].p1 = verts[r][i];
+					lines[k].p2 = verts[r - 1][i];
 				}
-				if (i != cols - 1)
+				if (i != c - 1)
 				{
-					lines[++k].p1 = verts[rows][i];
-					lines[k].p2 = verts[rows][i + 1];
+					lines[++k].p1 = verts[r][i];
+					lines[k].p2 = verts[r][i + 1];
 				}
 			}
 		}
 }
 
-t_line	*form_lines(t_vertex **verts, int *lines_count, int rows, int cols)
+t_line		*form_lines(t_vertex **verts, int *lines_count, int rows, int cols)
 {
 	t_line	*lines;
 
@@ -61,7 +61,7 @@ t_line	*form_lines(t_vertex **verts, int *lines_count, int rows, int cols)
 	return (lines);
 }
 
-void	find_max_min_z(t_vertex **verts, int rows, int cols, t_map *map)
+void		find_max_min_z(t_vertex **verts, int rows, int cols, t_map *map)
 {
 	int		i;
 	int		j;

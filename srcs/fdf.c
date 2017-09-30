@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 11:24:46 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 12:50:06 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 15:42:06 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "render.h"
 #include "hooks.h"
 
-int		fdf_init(t_fdf *all, char *name)
+static int	fdf_init(t_fdf *all, char *name)
 {
 	all->mlx = mlx_init();
 	if (!all->mlx)
@@ -45,7 +45,7 @@ int		fdf_init(t_fdf *all, char *name)
 	return (0);
 }
 
-void	fdf(char *file_name)
+void		fdf(char *file_name)
 {
 	t_fdf	all;
 

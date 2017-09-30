@@ -6,14 +6,14 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 11:11:59 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:12:00 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 15:47:03 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "clipping.h"
 #include <stdio.h>
 
-void	swap_vertices(t_vertex *v1, t_vertex *v2)
+static void	swap_vertices(t_vertex *v1, t_vertex *v2)
 {
 	t_vertex	tmp;
 
@@ -22,7 +22,7 @@ void	swap_vertices(t_vertex *v1, t_vertex *v2)
 	*v2 = tmp;
 }
 
-int		clip_near(t_line *line, float z)
+int			clip_near(t_line *line, float z)
 {
 	float	t;
 

@@ -6,13 +6,13 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 11:32:28 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:32:29 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 15:42:28 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "colors.h"
 
-t_rgb	*hsv2rgb_help(t_rgb *out, double r, double g, double b)
+static t_rgb	*hsv2rgb_help(t_rgb *out, double r, double g, double b)
 {
 	out->r = (unsigned char)(r * 255);
 	out->g = (unsigned char)(g * 255);
@@ -20,7 +20,7 @@ t_rgb	*hsv2rgb_help(t_rgb *out, double r, double g, double b)
 	return (out);
 }
 
-t_rgb	hsv_to_rgb(t_hsv in)
+t_rgb			hsv_to_rgb(t_hsv in)
 {
 	double		temp[5];
 	long		i;

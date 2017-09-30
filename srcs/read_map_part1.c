@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 12:04:20 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 12:16:22 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 15:44:31 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-t_vertex	**malloc_map(int fd, char ***splited, int *rows, int *cols)
+static t_vertex	**malloc_map(int fd, char ***splited, int *rows, int *cols)
 {
 	char		*file;
 	int			j;
@@ -44,7 +44,7 @@ t_vertex	**malloc_map(int fd, char ***splited, int *rows, int *cols)
 	return (vertices ? vertices : 0);
 }
 
-t_rgb		color_from_string(char *str)
+static t_rgb	color_from_string(char *str)
 {
 	int res;
 
@@ -55,7 +55,7 @@ t_rgb		color_from_string(char *str)
 	return (rgb_from_int(res));
 }
 
-int			fill_vertex(t_vertex *ver, float x, float y, char **info)
+static int		fill_vertex(t_vertex *ver, float x, float y, char **info)
 {
 	size_t	i;
 
@@ -79,7 +79,7 @@ int			fill_vertex(t_vertex *ver, float x, float y, char **info)
 	return (0);
 }
 
-int			fill_map(t_vertex **verts, char **table, int rows, int cols)
+static int		fill_map(t_vertex **verts, char **table, int rows, int cols)
 {
 	int		i;
 	int		j;
@@ -108,7 +108,7 @@ int			fill_map(t_vertex **verts, char **table, int rows, int cols)
 	return (0);
 }
 
-int			read_map(char *map_file, t_map *map)
+int				read_map(char *map_file, t_map *map)
 {
 	int			fd;
 	char		**splited;

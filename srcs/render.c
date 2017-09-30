@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 12:14:52 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 12:14:54 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 15:45:16 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "rasterization.h"
 #include "viewing_tranformations.h"
 
-void	clean_image(t_fdf *all)
+static void	clean_image(t_fdf *all)
 {
 	int total;
 	int *pixels;
@@ -26,7 +26,7 @@ void	clean_image(t_fdf *all)
 		pixels[total] = 0;
 }
 
-void	render(t_fdf *all)
+void		render(t_fdf *all)
 {
 	t_matrix4	mcam;
 	t_matrix4	mr;

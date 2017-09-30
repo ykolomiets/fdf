@@ -6,14 +6,14 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 12:01:24 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 12:01:27 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 15:43:28 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rasterization.h"
 #include "mathx.h"
 
-t_rgb	color_mode2(t_vertex *p1, t_vertex *p2, float t, t_map *map)
+static t_rgb	color_mode2(t_vertex *p1, t_vertex *p2, float t, t_map *map)
 {
 	t_rgb	res;
 	float	z;
@@ -27,7 +27,7 @@ t_rgb	color_mode2(t_vertex *p1, t_vertex *p2, float t, t_map *map)
 	return (res);
 }
 
-int		color_by_mode(t_vertex *p1, t_vertex *p2, float t, t_fdf *all)
+static int		color_by_mode(t_vertex *p1, t_vertex *p2, float t, t_fdf *all)
 {
 	t_rgb	res;
 
@@ -46,7 +46,7 @@ int		color_by_mode(t_vertex *p1, t_vertex *p2, float t, t_fdf *all)
 	return (0xffffff);
 }
 
-void	draw_line_dda(t_line *line, t_fdf *all)
+void			draw_line_dda(t_line *line, t_fdf *all)
 {
 	int		deltas[2];
 	int		steps;
