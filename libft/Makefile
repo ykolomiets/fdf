@@ -6,7 +6,7 @@
 #    By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/10 20:24:37 by ykolomie          #+#    #+#              #
-#    Updated: 2017/09/30 09:36:34 by ykolomie         ###   ########.fr        #
+#    Updated: 2017/09/30 10:59:49 by ykolomie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,6 +107,7 @@ $(OBJDIR):
 
 clean:
 	rm -f $(OBJ)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 	rm -rf $(NAME)

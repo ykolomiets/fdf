@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map.h                                         :+:      :+:    :+:   */
+/*   hooks.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/30 11:07:03 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:07:04 by ykolomie         ###   ########.fr       */
+/*   Created: 2017/09/30 11:18:48 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 12:20:23 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef READ_MAP_H
-# define READ_MAP_H
+#ifndef HOOKS_H
+# define HOOKS_H
 
 # include "base_structures.h"
 
-int		read_map(char *map_file, t_map *map);
-t_line	*form_lines(t_vertex **verts, int *lines_count, int rows, int cols);
-void	find_max_min_z(t_vertex **verts, int rows, int cols, t_map *map);
+int			mouse_hook(int button, int x, int y, t_fdf *all);
+int			pressed_hook(int keycode, t_fdf *all);
+void		pressed_hook2(int keycode, t_fdf *all);
+int			keys_hook(int keycode, t_fdf *all);
 
 #endif
