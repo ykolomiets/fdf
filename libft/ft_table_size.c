@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_table_size.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/30 11:04:30 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:04:33 by ykolomie         ###   ########.fr       */
+/*   Created: 2017/09/30 10:26:04 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 10:26:26 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+int	ft_table_size(char **table)
+{
+	int	size;
 
-void	fdf(char *file_name);
-
-#endif
+	size = 0;
+	while (table[size])
+		size++;
+	return (size);
+}

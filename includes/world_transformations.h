@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   world_transformations.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/30 11:04:30 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:04:33 by ykolomie         ###   ########.fr       */
+/*   Created: 2017/09/30 11:10:26 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 11:10:44 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef WORLD_TRANSFORMATIONS_H
+# define WORLD_TRANSFORMATIONS_H
 
-void	fdf(char *file_name);
+# include "base_structures.h"
+
+void	change_z(t_line *lines, int line_count, float z);
+void	scale_all(t_line *lines, int line_count, float coef);
 
 #endif

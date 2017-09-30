@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/30 22:47:27 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 16:19:38 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 10:58:45 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
-
+void			*ft_malloc_2d_array(int rows, int columns, int elem_size);
+void			ft_free_2d_array(void ***arr, int rows);
 char			*ft_strcat(char *dest, const char *src);
 char			*ft_strchr(const char *s, int c);
 int				ft_strcmp(const char *s1, const char *s2);
@@ -70,7 +71,7 @@ char			*ft_strtrim(char const *s);
 char			**ft_strsplit(char const *s, char c);
 void			ft_free_table(char ***table, int size);
 int				ft_count_word(char const *s, char delimetr);
-
+int				ft_table_size(char **table);
 char			*ft_itoa(int n);
 int				ft_atoi(const char *nptr);
 int				ft_atoi_base(const char *nptr, const char *base);

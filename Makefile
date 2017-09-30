@@ -6,69 +6,93 @@
 #    By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/14 16:54:48 by ykolomie          #+#    #+#              #
-#    Updated: 2017/04/20 15:27:53 by ykolomie         ###   ########.fr        #
+#    Updated: 2017/09/30 12:32:28 by ykolomie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-SRCDIR = ./srcs/
+SRC_DIR =        ./srcs/
+OBJ_DIR =        ./obj/
+LIBFT_DIR =      ./libft
+LIBMATHX_DIR =   ./math_extended
+LIBMLX_DIR =     ./minilibx_macos
 
-OBJDIR = ./obj/
+LIBFT =         libft.a
+LIBMATHX =      libmathx.a
+LIBMLX =        libmlx.a
 
-SRC_FILES = 	main.c						\
-				draw_line.c					\
-				fdf.c						\
-				matrix4.c 					\
-				vector4.c					\
-				v_and_m.c
+SRC_FILES = 			main.c				\
+				fdf.c			        \
+				read_map_part1.c                \
+				read_map_part2.c                \
+				viewing_transformations.c	\
+				rasterization.c			\
+				camera_transformations.c	\
+				world_transformations.c		\
+				matrix_transformations_part1.c	\
+				matrix_transformations_part2.c	\
+				matrix_transformations_part3.c	\
+				clipping.c                      \
+				render.c                        \
+				rgb.c                           \
+				hsv.c							\
+				hooks.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
-SRC = $(addprefix $(SRCDIR), $(SRC_FILES))
+SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-OBJ = $(addprefix $(OBJDIR), $(OBJ_FILES))
+OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-INC = -I ./includes -I $(LIBFTFOLDER) -I $(LMLXFOLDER)
+INC = -I ./includes -I $(LIBFT_DIR) -I $(LIBMLX_DIR) -I $(LIBMATHX_DIR)
 
-LIB = libft.a
+LIBFLAGS = -lft -L $(LIBFT_DIR) -lmlx -L $(LIBMLX_DIR) -L $(LIBMATHX_DIR) -lmathx -lm
 
-LIBFLAGS = -lft -L $(LIBFTFOLDER) -lmlx -L $(LMLXFOLDER) -lm
-
-LIBFTFOLDER = ./libft/
-
-
-#LMLXFOLDER = ./minilibx_macos
-LMLXFOLDER = ./minilibx
-
-FRAMEWORKS = -lXext -lX11
-#FRAMEWORKS = -framework OpenGL -framework AppKit
+FRAMEWORKS = -framework OpenGL -framework AppKit
 
 FLAGS = -Werror -Wextra -Wall
 
-CC = clang
+OPT = -O3
+
+CC = gcc
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFTFOLDER)$(LIB)
-	$(CC) $(FLAGS) $(FRAMEWORKS) $(OBJ) $(LIBFLAGS) -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT) $(LIBMATHX_DIR)/$(LIBMATHX) $(LIBMLX_DIR)/$(LIBMLX)
+	     $(CC) $(OBJ) $(FLAGS) $(OPT) $(FRAMEWORKS) $(LIBFLAGS) -o $(NAME)
 
-$(OBJDIR)%.o : $(SRCDIR)%.c
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	$(CC) $(FLAGS) $(INC) -c $< -o $@  
 
-$(LIBFTFOLDER)$(LIB):
-	make -C $(LIBFTFOLDER)
+$(OBJ): | $(OBJ_DIR)
+
+$(OBJ_DIR):
+	mkdir $(OBJ_DIR)
+
+$(LIBFT_DIR)/$(LIBFT):
+	make -s -C $(LIBFT_DIR)/
+
+$(LIBMATHX_DIR)/$(LIBMATHX):
+	make -s -C $(LIBMATHX_DIR)/
 	
-clean:
+$(LIBMLX_DIR)/$(LIBMLX):
+	make -s -C $(LIBMLX_DIR)/
+	
+clean: libclean
 	rm -rf $(OBJ)
 
-fclean: clean
+fclean: clean libfclean
 	rm -rf $(NAME)
 
 libclean:
-	make clean -C $(LIBFTFOLDER)
+	make clean -C $(LIBFT_DIR)/
+	make clean -C $(LIBMATHX_DIR)/
+	make clean -C $(LIBMLX_DIR)/
 
 libfclean:
-	make fclean -C $(LIBFTFOLDER)
+	make fclean -C $(LIBFT_DIR)/
+	make fclean -C $(LIBMATHX_DIR)/
+	make clean -C $(LIBMLX_DIR)/
 
 re: fclean libfclean all

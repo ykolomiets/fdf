@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   clipping.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/30 11:04:30 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:04:33 by ykolomie         ###   ########.fr       */
+/*   Created: 2017/09/30 11:04:58 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 11:04:59 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef CLIPPING_H
+# define CLIPPING_H
 
-void	fdf(char *file_name);
+# include "base_structures.h"
+
+int	clip_near(t_line *line, float z);
 
 #endif

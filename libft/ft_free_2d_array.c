@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_free_2d_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/30 11:04:30 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:04:33 by ykolomie         ###   ########.fr       */
+/*   Created: 2017/09/30 10:57:14 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 10:57:15 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
+#include <stdlib.h>
 
-void	fdf(char *file_name);
+void	ft_free_2d_array(void ***arr, int rows)
+{
+	int i;
 
-#endif
+	i = 0;
+	while (i < rows)
+		free((*arr)[i++]);
+	free((*arr));
+	*arr = 0;
+}

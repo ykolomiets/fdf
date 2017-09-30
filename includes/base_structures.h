@@ -5,67 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 18:10:40 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 15:41:49 by ykolomie         ###   ########.fr       */
+/*   Created: 2017/09/30 11:02:19 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 11:25:25 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BASE_STRUCTURES_H
 # define BASE_STRUCTURES_H
 
-# define X 0
-# define Y 1
-# define Z 2
+# include "mathx.h"
+# include "mlx.h"
+# include "colors.h"
 
-typedef struct	s_window
+# define ORTHOGONAL 0
+# define PERSPECTIVE 1
+
+typedef struct		s_vertex
 {
-	void	*mlx;
-	void	*win;
-}				t_window;
+	t_hvec			position;
+	float			real_z;
+	t_rgb			color;
+}					t_vertex;
 
-typedef struct	s_vector2
+typedef struct		s_line
 {
-		double	x;
-		double	y;
-}				t_vector2;
+	t_vertex		p1;
+	t_vertex		p2;
+}					t_line;
 
-typedef struct	s_vector4
+typedef struct		s_map
 {
-		double	x;
-		double	y;
-		double	z;
-		double	w;
-}				t_vector4;
+	t_line			*lines;
+	int				line_count;
+	float			min_z;
+	float			max_z;
+}					t_map;
 
-typedef struct	s_fdf
+typedef struct		s_camera
 {
-	t_window	wind;
-	t_vector4	**map;
-	t_vector4	center;
-	int			map_rows;
-	int			map_columns;
-}				t_fdf;
+	t_vec3			eye;
+	t_vec3			gaze;
+	t_vec3			view_up;
+}					t_camera;
 
-void		v4_add(t_vector4 a, t_vector4 b, t_vector4 c);
-void		v4_sub(t_vector4 a, t_vector4 b, t_vector4 c);
-double		v4_dot_product(t_vector4 a, t_vector4 b);
-void		v4_cross_product(t_vector4 a, t_vector4 b, t_vector4 c);
+typedef struct		s_box
+{
+	float			left;
+	float			right;
+	float			top;
+	float			bottom;
+	float			near;
+	float			far;
+}					t_box;
 
-typedef double	t_matrix3[9];
-typedef	double	t_matrix4[16];
+typedef struct		s_image
+{
+	void			*image;
+	int				*ps;
+	int				bpp;
+	int				sl;
+	int				endian;
+}					t_image;
 
-void		m4_add(t_matrix4 a, t_matrix4 b, t_matrix4 c);
-void		m4_sub(t_matrix4 a, t_matrix4 b, t_matrix4 c);
-void		m4_mul(t_matrix4 a, t_matrix4 b, t_matrix4 c);
-double		m4_det(t_matrix4);
-void		m4_identity(t_matrix4 m);
-
-void		m4_translate(t_matrix4 res, double x, double y, double z);
-void		m4_scale(t_matrix4 res, double x, double y, double z);
-void		m4_rotate_xaxis(t_matrix4 mat, double angle);
-void		m4_rotate_yaxis(t_matrix4 mat, double angle);
-void		m4_rotate_zaxis(t_matrix4 mat, double angle);
-
-void		v4_x_m4(t_vector4 *v, t_matrix4 m);
+typedef struct		s_fdf
+{
+	void			*mlx;
+	void			*window;
+	int				height;
+	int				width;
+	t_image			image;
+	t_map			map;
+	t_camera		camera;
+	t_box			box;
+	int				view_type;
+	int				cmode;
+}					t_fdf;
 
 #endif

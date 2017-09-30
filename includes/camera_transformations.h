@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   camera_transformations.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/30 11:04:30 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:04:33 by ykolomie         ###   ########.fr       */
+/*   Created: 2017/09/30 11:03:01 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 11:07:31 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef CAMERA_TRANSFORMATIONS_H
+# define CAMERA_TRANSFORMATIONS_H
 
-void	fdf(char *file_name);
+# include "mathx.h"
+# include "base_structures.h"
+
+void	camera_move(t_camera *camera, int forward);
+void	camera_roll(t_camera *camera, float angle);
+void	camera_pitch(t_camera *camera, float angle);
+void	camera_yaw(t_camera *camera, float angle);
 
 #endif

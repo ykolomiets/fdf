@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   vector2_part1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/30 11:04:30 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 11:04:33 by ykolomie         ###   ########.fr       */
+/*   Created: 2017/09/30 10:12:11 by ykolomie          #+#    #+#             */
+/*   Updated: 2017/09/30 10:12:12 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "mathx.h"
+#include <stdlib.h>
 
-void	fdf(char *file_name);
+t_vec2	v2_create(float x, float y)
+{
+	return (t_vec2){x, y};
+}
 
-#endif
+t_vec2	v2_add(t_vec2 a, t_vec2 b)
+{
+	return (t_vec2){a.x + b.x, a.y + b.y};
+}
+
+t_vec2	v2_sub(t_vec2 a, t_vec2 b)
+{
+	return (t_vec2){a.x - b.x, a.y - b.y};
+}
