@@ -6,7 +6,7 @@
 #    By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/10 20:24:37 by ykolomie          #+#    #+#              #
-#    Updated: 2017/04/20 16:17:17 by ykolomie         ###   ########.fr        #
+#    Updated: 2017/09/30 09:36:34 by ykolomie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,11 @@ $(NAME): $(OBJ)
 
 $(OBJDIR)%.o : $(SRCDIR)%.c
 	$(CC) $(FLAGS) -c $< -o $@
+
+$(OBJ): | $(OBJDIR)
+
+$(OBJDIR):
+	mkdir $(OBJDIR)
 
 clean:
 	rm -f $(OBJ)
