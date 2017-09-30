@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 09:56:13 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/09/30 09:56:16 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/09/30 11:49:09 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define PI 3.141592653589793f
 # define ROUND(a) ((int)(a + 0.5))
 # define ABS(a) ((a) < 0 ? -(a) : (a))
+# define IN_RANGE(x, min, max) ((x) >= (min) && (x) <= (max))
 
 typedef struct	s_vec2
 {
