@@ -6,7 +6,7 @@
 /*   By: ykolomie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 18:04:02 by ykolomie          #+#    #+#             */
-/*   Updated: 2017/04/20 16:18:59 by ykolomie         ###   ########.fr       */
+/*   Updated: 2017/10/01 12:28:27 by ykolomie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ char	*read_file(int fd)
 	length = 0;
 	buf_size = 16;
 	buf = malloc(sizeof(char) * buf_size);
-	while ((readed = read(fd, buf + length, buf_size - length)))
+	readed = read(fd, buf, buf_size);
+	while (readed > 0)
 	{
 		length += readed;
 		if (length == buf_size)
 			buf = expand_buf(buf, &buf_size);
+		readed = read(fd, buf + length, buf_size - length);
 	}
 	buf[length] = '\0';
 	return (buf);
